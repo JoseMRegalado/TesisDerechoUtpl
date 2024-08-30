@@ -1,1 +1,26 @@
-<p>header works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tesis Derecho UTPL</title>
+</head>
+<header>
+  <div class="logo">
+    <img [routerLink]="['/home']" src="./assets/img/logo.svg" alt="Logo">
+  </div>
+
+  <nav class="navbar">
+    <a [routerLink]="['/home']">Inicio</a>
+    <a [routerLink]="['/simulations']">Objetivo</a>
+    <a href="https://www.utpl.edu.ec/" target="_blank">Carrera Derecho</a>
+    <a href="https://www.utpl.edu.ec/carreras/derecho" target="_blank">UTPL</a>
+  </nav>
+
+  <div class="boton">
+    <button>Iniciar Sesión UTPL</button>
+  </div>
+
+
+</header>

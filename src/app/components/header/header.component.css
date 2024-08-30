@@ -1,0 +1,49 @@
+header{
+  top: 0;left: 0;right: 0;
+  background: #E2E2E2;
+  padding: 2rem 9%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1000;
+  box-shadow: 0.5rem 1rem rgba(0, 0, 0, .1);
+  height: 108px;
+}
+
+header .logo{
+  display: flex;
+  align-items: center;
+}
+
+header .logo img{
+  height: 68px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+header .navbar a{
+  font-size: 18px;
+  padding: 0 1.5rem;
+  color: #667;
+}
+
+header .boton {
+  display: flex;
+  align-items: center;
+}
+
+header .boton button{
+  color: #000000;
+  padding: 9px 15px;
+  background: #FFAB02;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  width: 200px;
+  height: 52px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

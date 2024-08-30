@@ -1,0 +1,52 @@
+.final {
+  background-color: #044170;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  padding: 2rem 9%;
+}
+
+.contacto{
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  line-height: 20px;
+  font-size: 11px;
+  gap: 30px;
+
+}
+
+.enlaces{
+  display: flex;
+  width: 60%;
+  gap: 40px;
+  margin-right: 5%;
+}
+
+.enlaces h3{
+  font-size: 14px;
+}
+
+.enlaces h5{
+  line-height: 25px;
+  width: 112px;
+  font-weight: 400;
+  font-size: 11px;
+}
+
+.principal{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.soporte{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.opciones-redes{
+  display: flex;
+}
