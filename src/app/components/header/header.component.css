@@ -47,3 +47,6 @@ header .boton button{
   justify-content: center;
 }
 
+header .navbar a:hover{
+  color: rgba(4, 65, 112, 1);
+}

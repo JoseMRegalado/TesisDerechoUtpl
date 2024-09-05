@@ -13,14 +13,23 @@
 
   <nav class="navbar">
     <a [routerLink]="['/home']">Inicio</a>
-    <a [routerLink]="['/simulations']">Objetivo</a>
+    <a [routerLink]="['/info']">Objetivo</a>
     <a href="https://www.utpl.edu.ec/" target="_blank">Carrera Derecho</a>
     <a href="https://www.utpl.edu.ec/carreras/derecho" target="_blank">UTPL</a>
   </nav>
 
-  <div class="boton">
-    <button>Iniciar Sesión UTPL</button>
+  <div *ngIf="loggedIn; else loginButton">
+    <div class="user-info">
+      <p>{{ user?.firstName }} {{ user?.lastName }}</p>
+      <p>{{ user?.role }}</p>
+      <button (click)="logout()">Cerrar Sesión</button>
+    </div>
   </div>
 
-
+  <ng-template #loginButton>
+    <div class="boton">
+      <button [routerLink]="['/login']">Iniciar Sesión UTPL</button>
+    </div>
+  </ng-template>
 </header>
+

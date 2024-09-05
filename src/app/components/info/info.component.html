@@ -1,0 +1,33 @@
+<app-header></app-header>
+<div class="info-container">
+  <h2>Información</h2>
+
+  <div class="roles-selection">
+    <label for="roles">Selecciona una opción:</label>
+    <select id="roles" [(ngModel)]="selectedRole" [disabled]="!availableRoles.length">
+      <option *ngFor="let role of availableRoles" [value]="role">{{ role | titlecase }}</option>
+    </select>
+  </div>
+
+  <div class="modality-selection">
+    <label>Selecciona tu modalidad:</label>
+    <button (click)="onModalityChange('presencial')">Modalidad Presencial</button>
+    <button (click)="onModalityChange('distancia')">Modalidad Abierta y Distancia</button>
+  </div>
+
+
+  <div class="classes-select" *ngIf="filteredClasses$ | async as filteredClasses">
+    <label for="classes">Selecciona una opción:</label>
+    <select id="classes" [(ngModel)]="selectedClass">
+      <option *ngFor="let classItem of filteredClasses" [value]="classItem.id">
+        {{ classItem.name }} - {{ classItem.cicle }}º ciclo (Profesor: {{ classItem.professorName }})
+      </option>
+    </select>
+  </div>
+
+  <!-- Botón de redirección al componente Profile -->
+  <button (click)="goToProfile()" [disabled]="!isButtonEnabled()" class="profile-button">
+    Ir a Perfil
+  </button>
+</div>
+<app-footer></app-footer>
