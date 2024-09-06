@@ -18,11 +18,13 @@
     <a href="https://www.utpl.edu.ec/carreras/derecho" target="_blank">UTPL</a>
   </nav>
 
-  <div *ngIf="loggedIn; else loginButton">
+  <div *ngIf="loggedIn; else loginButton" class="acceso">
     <div class="user-info">
-      <p>{{ user?.firstName }} {{ user?.lastName }}</p>
+      <h4>{{ user?.firstName }} {{ user?.lastName }}</h4>
       <p>{{ user?.role }}</p>
-      <button (click)="logout()">Cerrar Sesión</button>
+    </div>
+    <div class="logout">
+      <button (click)="logout()"><img src="assets/img/Vector%20(4).svg"></button>
     </div>
   </div>
 

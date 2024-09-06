@@ -4,24 +4,32 @@
   align-items: center;
   justify-content: space-between;
   color: white;
-  padding: 2rem 9%;
+  padding: 1rem 3%;
+  width: 100%;
+  gap: 30%;
 }
 
 .contacto{
   display: flex;
   flex-direction: column;
-  width: 20%;
-  line-height: 20px;
-  font-size: 11px;
+  width: 27%;
+  line-height: 30px;
+  font-size: 12px;
   gap: 30px;
 
+}
+
+.simbolo{
+  display: flex;
+  font-size: 18px;
+  align-items: center;
+  gap: 15px;
 }
 
 .enlaces{
   display: flex;
   width: 60%;
   gap: 40px;
-  margin-right: 5%;
 }
 
 .enlaces h3{
@@ -39,14 +47,21 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-right: 5%;
 }
 
 .soporte{
   display: flex;
   flex-direction: column;
   gap: 16px;
+  margin-right: 5%;
+
 }
 
-.opciones-redes{
+.opciones-redes {
   display: flex;
+}
+
+.redes{
+
 }

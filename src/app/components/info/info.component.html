@@ -1,7 +1,14 @@
 <app-header></app-header>
 <div class="info-container">
-  <h2>Información</h2>
-
+  <h2>AT + 360 U-T-S</h2>
+  <h3>Información</h3>
+  <div class="texto-introductorio">
+    <p>
+      En un mundo en constante cambio, la educación se erige como la piedra angular del progreso y la adaptabilidad. En este contexto, se están implementando estrategias innovadoras que buscan transformar la manera en que enseñamos y aprendemos.
+      Desde el uso de tecnologías emergentes hasta enfoques pedagógicos vanguardistas, la revolución educativa está en marcha. La integración de la inteligencia artificial en el aula no solo personaliza la experiencia de aprendizaje, sino que también abre nuevas puertas a la creatividad y la resolución de problemas.
+    </p>
+  </div>
+<div class="seleccion">
   <div class="roles-selection">
     <label for="roles">Selecciona una opción:</label>
     <select id="roles" [(ngModel)]="selectedRole" [disabled]="!availableRoles.length">
@@ -11,23 +18,30 @@
 
   <div class="modality-selection">
     <label>Selecciona tu modalidad:</label>
-    <button (click)="onModalityChange('presencial')">Modalidad Presencial</button>
-    <button (click)="onModalityChange('distancia')">Modalidad Abierta y Distancia</button>
+    <div class="modalidad">
+      <button (click)="onModalityChange('presencial')">Modalidad Presencial</button>
+      <button (click)="onModalityChange('distancia')">Modalidad Abierta y Distancia</button>
+    </div>
+
+    <div class="classes-select" *ngIf="filteredClasses$ | async as filteredClasses">
+      <label for="classes">Selecciona una opción:</label>
+      <select id="classes" [(ngModel)]="selectedClass">
+        <option *ngFor="let classItem of filteredClasses" [value]="classItem.id">
+          {{ classItem.name }} - {{ classItem.cicle }}º ciclo (Profesor: {{ classItem.professorName }})
+        </option>
+      </select>
+    </div>
   </div>
 
 
-  <div class="classes-select" *ngIf="filteredClasses$ | async as filteredClasses">
-    <label for="classes">Selecciona una opción:</label>
-    <select id="classes" [(ngModel)]="selectedClass">
-      <option *ngFor="let classItem of filteredClasses" [value]="classItem.id">
-        {{ classItem.name }} - {{ classItem.cicle }}º ciclo (Profesor: {{ classItem.professorName }})
-      </option>
-    </select>
-  </div>
 
-  <!-- Botón de redirección al componente Profile -->
-  <button (click)="goToProfile()" [disabled]="!isButtonEnabled()" class="profile-button">
-    Ir a Perfil
-  </button>
+  <div class="perfil-boton">
+    <button (click)="goToProfile()" [disabled]="!isButtonEnabled()" class="profile-button">
+      Ir a Perfil
+    </button>
+  </div>
 </div>
+
+</div>
+
 <app-footer></app-footer>

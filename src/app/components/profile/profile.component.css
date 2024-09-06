@@ -1,0 +1,17 @@
+.profile-header{
+  display: flex;
+  flex-direction: column;
+  max-width: 1019px;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto 0 auto;
+}
+
+.profile-container{
+  display: flex;
+  flex-direction: column;
+  max-width: 1232px;
+  margin: auto;
+  text-align: center;
+  gap: 20px;
+}

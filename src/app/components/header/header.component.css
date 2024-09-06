@@ -45,8 +45,22 @@ header .boton button{
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: none;
 }
 
 header .navbar a:hover{
   color: rgba(4, 65, 112, 1);
 }
+
+.acceso{
+  display: flex;
+  align-items: center;
+}
+
+
+.user-info{
+  font-size: 14px;
+  margin-right: 10px;
+  text-align: right;
+}
+

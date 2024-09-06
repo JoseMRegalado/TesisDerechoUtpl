@@ -1,0 +1,68 @@
+.info-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1024px;
+  margin: auto;
+}
+
+.info-container h2{
+  margin-top: 25px;
+  color: #003F72;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.info-container h3{
+  color: #EAAB01;
+  font-size: 20px;
+}
+
+.roles-selection{
+  border-color: #1A2434;
+
+}
+
+.seleccion{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 20%;
+}
+
+.modalidad{
+  display: flex;
+  gap: 20px;
+  justify-content: space-around;
+
+}
+
+.modality-selection{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 10px;
+
+}
+.perfil-boton button{
+  display: inline-block;
+  border-radius: 1rem;
+  color: #fff;
+  background-color: rgba(4, 65, 112, 1);
+  padding: .8rem 2.5rem;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.classes-select label{
+  text-align: center;
+}
+
+.texto-introductorio{
+  display: flex;
+  margin-top: 30px;
+  line-height: 1.5;
+  margin-bottom: 30px;
+  text-align: justify;
+
+}
