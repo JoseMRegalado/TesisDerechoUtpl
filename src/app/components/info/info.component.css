@@ -1,4 +1,5 @@
-.info-container{
+/* Estilos del contenedor principal */
+.info-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -6,45 +7,155 @@
   margin: auto;
 }
 
-.info-container h2{
+/* Títulos principales */
+.info-container h2 {
   margin-top: 25px;
   color: #003F72;
-  font-size: 36px;
-  margin-bottom: 10px;
+  font-size: 38px;
 }
 
-.info-container h3{
+.info-container h3 {
   color: #EAAB01;
   font-size: 20px;
+  margin-top: 10px;
 }
 
-.roles-selection{
-  border-color: #1A2434;
-
+.info-container img{
+  max-width: 280px;
 }
-
-.seleccion{
+/* Estilo para el texto introductorio */
+.texto-introductorio {
   display: flex;
-  width: 100%;
+  margin-top: 30px;
+  line-height: 1.5;
+  margin-bottom: 30px;
+  text-align: justify;
+}
+
+/* Estilos del contenedor de selección */
+.seleccion {
+  display: flex;
   justify-content: space-between;
   margin-bottom: 20%;
+  align-items: center;
 }
 
-.modalidad{
+/* Estilo del contenedor de selección de roles */
+.roles-selection {
+  border-color: #1A2434;
   display: flex;
-  gap: 20px;
-  justify-content: space-around;
-
+  flex-direction: column;
+  gap: 10px;
 }
 
-.modality-selection{
+.roles-selection label {
+  font-size: 14px;
+  color: #1A2434;
+  margin-bottom: 5px;
+}
+
+/* Estilos del select */
+.roles-selection select{
+  appearance: none;
+  padding: 10px;
+  border: 1px solid #1A2434;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 250px;
+  background-color: #fff;
+  color: #1A2434;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Añadir una sombra */
+  background-image: url('/assets/img/flecha.svg');
+  background-repeat: no-repeat;
+  background-position: right 10px top 50%;
+  background-size: 12px;
+}
+
+/* Estilos de las opciones del select */
+.roles-selection option {
+  padding: 10px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #1A2434;
+}
+
+/* Contenedor de selección de modalidad */
+.modality-selection {
   display: flex;
   flex-direction: column;
   text-align: center;
   gap: 10px;
-
 }
-.perfil-boton button{
+
+.modalidad {
+  display: flex;
+  gap: 35px;
+  justify-content: space-around;
+}
+
+/* Estilos de los botones de modalidad */
+.modalidad button {
+  border: none;
+  background-color: #ffffff; /* Mantiene el fondo blanco */
+  color: black; /* Color inicial del texto */
+  cursor: pointer;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+/* Efecto hover solo en el texto */
+.modalidad button:hover {
+  color: #003F72;
+  font-weight: bold;
+}
+
+
+/* Estilo de la selección de clases */
+
+.classes-select{
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+}
+
+
+.classes-select label {
+  text-align: center;
+}
+
+.classes-select select {
+  appearance: none;
+  padding: 10px;
+  border: 1px solid #1A2434;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+  max-width: 400px;
+  background-color: #fff;
+  color: #1A2434;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-image: url('/assets/img/flecha.svg');
+  background-repeat: no-repeat;
+  background-position: right 10px top 50%;
+  background-size: 12px;
+}
+
+.classes-select option {
+  padding: 10px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #1A2434;
+}
+
+/* Botón de perfil */
+.perfil-boton button {
   display: inline-block;
   border-radius: 1rem;
   color: #fff;
@@ -54,15 +165,9 @@
   font-size: 13px;
 }
 
-.classes-select label{
-  text-align: center;
+.perfil-boton button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
 
-.texto-introductorio{
-  display: flex;
-  margin-top: 30px;
-  line-height: 1.5;
-  margin-bottom: 30px;
-  text-align: justify;
 
-}

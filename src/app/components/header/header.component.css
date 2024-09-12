@@ -64,3 +64,9 @@ header .navbar a:hover{
   text-align: right;
 }
 
+.logout button{
+  background-color: #e2e2e2;
+}
+
+
+

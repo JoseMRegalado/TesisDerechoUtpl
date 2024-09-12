@@ -1,6 +1,7 @@
 <app-header></app-header>
 <div class="info-container">
   <h2>AT + 360 U-T-S</h2>
+  <img src="assets/img/linea%20con%20circulo.svg">
   <h3>Información</h3>
   <div class="texto-introductorio">
     <p>
@@ -10,8 +11,8 @@
   </div>
 <div class="seleccion">
   <div class="roles-selection">
-    <label for="roles">Selecciona una opción:</label>
     <select id="roles" [(ngModel)]="selectedRole" [disabled]="!availableRoles.length">
+      <option value="" disabled [ngValue]="null">Selecciona una opción</option>
       <option *ngFor="let role of availableRoles" [value]="role">{{ role | titlecase }}</option>
     </select>
   </div>
@@ -24,8 +25,8 @@
     </div>
 
     <div class="classes-select" *ngIf="filteredClasses$ | async as filteredClasses">
-      <label for="classes">Selecciona una opción:</label>
       <select id="classes" [(ngModel)]="selectedClass">
+        <option value="" disabled [ngValue]="null">Selecciona una opción</option>
         <option *ngFor="let classItem of filteredClasses" [value]="classItem.id">
           {{ classItem.name }} - {{ classItem.cicle }}º ciclo (Profesor: {{ classItem.professorName }})
         </option>
@@ -37,7 +38,7 @@
 
   <div class="perfil-boton">
     <button (click)="goToProfile()" [disabled]="!isButtonEnabled()" class="profile-button">
-      Ir a Perfil
+      Iniciar
     </button>
   </div>
 </div>
