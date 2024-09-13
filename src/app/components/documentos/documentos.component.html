@@ -1,0 +1,45 @@
+<app-header></app-header>
+<app-bar></app-bar>
+
+<h2>Ingreso y validación de documentación</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Ingreso documento digital</th>
+    <th>Descripción de Documento</th>
+    <th>Fecha de ingreso</th>
+    <th>Fecha de validación</th>
+    <th>Observaciones</th>
+    <th>Docente</th>
+    <th>Director</th>
+    <th>Secretario</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let doc of documents">
+    <td><a [href]="doc.link" target="_blank">Ver documento</a></td>
+    <td>{{ doc.descripcion }}</td>
+    <td>{{ doc.fechaIngreso }}</td>
+    <td>{{ doc.fechaValidacion || '-' }}</td>
+    <td>{{ doc.observaciones || 'Ninguna' }}</td>
+    <td>{{ doc.docente || 'En espera' }}</td>
+    <td>{{ doc.director || 'En espera' }}</td>
+    <td>{{ doc.secretario || 'En espera' }}</td>
+  </tr>
+  <tr *ngIf="addingDocument">
+    <td><input type="file" (change)="onFileSelected($event)" /></td>
+    <td><input type="text" [(ngModel)]="newDocument.descripcion" /></td>
+    <td><input type="date" [(ngModel)]="newDocument.fechaIngreso" /></td>
+    <td>-</td>
+    <td>Ninguna</td>
+    <td>En espera</td>
+    <td>En espera</td>
+    <td>En espera</td>
+  </tr>
+  </tbody>
+</table>
+
+<button *ngIf="!addingDocument" (click)="addDocument()">Agregar</button>
+<button *ngIf="addingDocument" (click)="confirmDocument()">Confirmar</button>
+<app-footer></app-footer>

@@ -1,0 +1,136 @@
+<app-header></app-header>
+<app-bar></app-bar>
+<div class="personal-data-container">
+  <h2>Datos Personales</h2>
+
+  <div class="inicio">
+    <!-- Documento de Identidad -->
+    <label for="document">Documento de Identidad</label>
+    <select id="document" [(ngModel)]="selectedDocument">
+      <option value="pasaporte">Pasaporte</option>
+      <option value="residencia">Residencia</option>
+      <option value="cedula">Cédula</option>
+    </select>
+
+    <!-- Foto Documento de Identidad -->
+    <label for="idDocPhoto">Adjuntar *</label>
+    <input id="idDocPhoto" type="file" (change)="onFileSelected($event, 'idDocPhoto')" />
+  </div>
+
+<div class="calendario">
+  <!-- Fecha de Nacimiento -->
+  <label for="birthdate">Fecha de Nacimiento</label>
+  <input type="date" id="birthdate" [(ngModel)]="birthdate" required/>
+
+  <!-- Fecha de Utpl -->
+  <label for="utpldate">Fecha de Ingreso a la Utpl</label>
+  <input type="date" id="utpldate" [(ngModel)]="utpldate" required />
+</div>
+
+
+  <!-- Nombres -->
+  <label for="firstName">Nombres *</label>
+  <input type="text" id="firstName" [(ngModel)]="firstName" required />
+
+  <!-- Apellidos -->
+  <label for="lastName">Apellidos *</label>
+  <input type="text" id="lastName" [(ngModel)]="lastName" required />
+
+  <!-- Sexo -->
+  <label for="gender">Sexo *</label>
+  <select id="gender" [(ngModel)]="gender" required>
+    <option value="masculino">Masculino</option>
+    <option value="femenino">Femenino</option>
+    <option value="otro">Otro</option>
+  </select>
+
+  <!-- Nacionalidad -->
+  <label for="nationality">Nacionalidad *</label>
+  <input type="text" id="nationality" [(ngModel)]="nationality" required />
+
+  <!-- Foto ID UTPL -->
+  <label for="idPhoto">Foto ID UTPL *</label>
+  <input id="idPhoto" type="file" (change)="onFileSelected($event, 'idPhoto')" />
+
+  <!-- Domicilio -->
+  <label for="address">Domicilio *</label>
+  <input type="text" id="address" [(ngModel)]="address" required />
+
+  <!-- Localidad -->
+  <label for="city">Localidad *</label>
+  <input type="text" id="city" [(ngModel)]="city" required />
+
+  <!-- Email UTPL -->
+  <label for="utplEmail">Email UTPL * (@utpl.edu.ec)</label>
+  <input type="email" id="utplEmail" [(ngModel)]="utplEmail" required />
+
+  <!-- Email personal -->
+  <label for="personalEmail">Email personal *</label>
+  <input type="email" id="personalEmail" [(ngModel)]="personalEmail" required />
+
+  <!-- Código Postal -->
+  <label for="postalCode">Código Postal *</label>
+  <input type="number" id="postalCode" [(ngModel)]="postalCode" required />
+
+  <!-- País -->
+  <label for="country">País *</label>
+  <select id="country" [(ngModel)]="country" required>
+    <option value="ecuador">Ecuador</option>
+    <!-- Añade más países si es necesario -->
+  </select>
+
+  <!-- Provincia -->
+  <label for="province">Provincia *</label>
+  <input type="text" id="province" [(ngModel)]="province" required />
+
+  <!-- Teléfono Fijo -->
+  <label for="landline">Teléfono fijo *</label>
+  <input type="tel" id="landline" [(ngModel)]="landline" required />
+
+  <!-- Teléfono Celular -->
+  <label for="mobile">Teléfono celular *</label>
+  <input type="tel" id="mobile" [(ngModel)]="mobile" required />
+
+  <!-- Información de Discapacidad -->
+  <div>
+    <label for="disability">Discapacidad Especial</label>
+    <input type="checkbox" id="disability" [(ngModel)]="hasDisability" (change)="toggleDisabilityFields()" />
+  </div>
+
+  <!-- Campos de Discapacidad -->
+  <div *ngIf="hasDisability">
+    <label for="disabilityPercentage">Grado de Discapacidad</label>
+    <input type="number" id="disabilityPercentage" [(ngModel)]="disabilityPercentage" />
+
+    <label for="disabilityType">Tipo de Discapacidad</label>
+    <input type="text" id="disabilityType" [(ngModel)]="disabilityType" />
+
+    <label for="idDiscPhoto">Foto Carnet *</label>
+    <input id="idDiscPhoto" type="file" (change)="onFileSelected($event, 'idDiscPhoto')" />
+  </div>
+
+  <!-- Actividad Laboral -->
+  <label for="laborActivity">Actividad Laboral</label>
+  <select id="laborActivity" [(ngModel)]="laborActivity">
+    <option value="empleado">Empleado</option>
+    <option value="estudiante">Estudiante</option>
+    <option value="desempleado">Desempleado</option>
+    <option value="otro">Otro</option>
+  </select>
+
+  <!-- Checkbox para Beca -->
+  <div>
+    <label for="scholarship">Beca</label>
+    <input type="checkbox" id="scholarship" [(ngModel)]="hasScholarship" (change)="toggleScholarshipFields()" />
+  </div>
+
+  <!-- Campos de Beca -->
+  <div *ngIf="hasScholarship">
+    <label for="scholarshipPercentage">Porcentaje de Beca</label>
+    <input type="number" id="scholarshipPercentage" [(ngModel)]="scholarshipPercentage" />
+  </div>
+
+  <!-- Botón de Finalizar -->
+  <button (click)="finalize()">Guardar</button>
+</div>
+<app-footer></app-footer>
