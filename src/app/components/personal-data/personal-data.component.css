@@ -1,26 +1,76 @@
+.seccion-4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 30px;
+  background-color: white;
+}
 
+.leyenda {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+
+.leyenda img {
+  margin-right: 10px; /* Espacio entre la imagen y el texto */
+}
+
+.plataforma {
+  display: flex;
+  justify-content: center;
+  max-width: 800px;
+  font-size: 26px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.plataforma h3 {
+  margin: 0;
+}
+
+
+.personal-data-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #fff;
+}
 
 .personal-data-container h2 {
   text-align: center;
   color: #333;
+  margin-top: 20px ;
 }
 
-.personal-data-container label {
+.personal-data-container .required-label {
   display: block;
   margin: 10px 0 5px;
+}
+
+.personal-data-container .opcional {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+.required-label::after {
+  content: " *";
+  color: red;
 }
 
 input[type="text"],
 input[type="email"],
 input[type="tel"],
 input[type="number"],
-input[type="date"],
 select {
   padding: 8px;
   margin-bottom: 10px;
   box-sizing: border-box;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 10px;
+  width: 175px;
 }
 
 input[type="file"] {
@@ -47,17 +97,103 @@ button:hover {
   background-color: #003580;
 }
 
-
-.inicio{
+.inicio {
   display: flex;
   justify-content: left;
   gap: 20px;
-  padding-left: 15px;
+  padding: 10px 10%;
 }
 
-.calendario{
+.calendario {
   display: flex;
   justify-content: left;
-  gap: 20px;
-  padding-left: 15px;
+  gap: 8%;
+  padding: 10px 10%;
+}
+
+.campos {
+  display: flex;
+  gap: 30px;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+}
+
+.informacion-obligatoria {
+  background-color: #f9fcff;
+  padding: 40px 10%;
+}
+
+
+/* Ocultar el input de archivo nativo */
+input[type="file"] {
+  display: none;
+}
+
+/* Diseño del label que reemplaza al input file */
+.custom-file-upload {
+  display: flex;
+  border: 1px dashed #ccc;
+  border-radius: 10px;
+  padding: 5px;
+  width: 175px;
+  cursor: pointer;
+  color: #333;
+  font-size: 10px;
+  gap: 5px;
+  margin: 0;
+}
+
+.custom-file-upload img {
+  width: 15px;
+}
+
+.custom-file-upload:hover {
+  border-color: #0056b3;
+  background-color: #f9fcff;
+}
+
+.file-upload-container{
+  display: flex;
+  flex-direction: column;
+
+}
+
+.file-types {
+  font-size: 10px;
+  color: #888;
+}
+
+.discapacidad{
+  display: flex;
+}
+
+.guardar{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.guardar button{
+  display: inline-block;
+  border-radius: 0.5rem;
+  color: #fff;
+  background-color: rgba(4, 65, 112, 1);
+
+  cursor: pointer;
+  font-size: 11.14px;
+  width: 100px;
+  text-align: center;
+
+}
+
+.guardar button:hover{
+  color: rgba(4, 65, 112, 1);
+  background-color: #E2E2E2;
+  border: solid 1px rgba(4, 65, 112, 1);
+}
+
+.personal-data-container .custom-file-upload label{
+  margin: 0;
 }

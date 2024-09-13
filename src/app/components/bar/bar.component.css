@@ -1,3 +1,5 @@
+
+
 .bar-container {
   display: flex;
   justify-content: center;
@@ -36,4 +38,6 @@
 .linea{
   border: solid #003366;
   width: 100%;
+  height: 5px;
+  background-color:#003366 ;
 }
