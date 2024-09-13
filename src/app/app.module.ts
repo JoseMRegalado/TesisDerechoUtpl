@@ -16,6 +16,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { PersonalDataComponent } from './components/personal-data/personal-data.component';
 import { BarComponent } from './components/bar/bar.component';
 import { DocumentosComponent } from './components/documentos/documentos.component';
+import { Footer2Component } from './components/footer2/footer2.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -28,7 +29,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent, HomeComponent, LoginComponent, InfoComponent, ProfileComponent, PersonalDataComponent, BarComponent, DocumentosComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, HomeComponent, LoginComponent, InfoComponent, ProfileComponent, PersonalDataComponent, BarComponent, DocumentosComponent, Footer2Component],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),

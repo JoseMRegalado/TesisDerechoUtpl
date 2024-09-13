@@ -1,4 +1,7 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+*{
+  font-family: Outfit, sans-serif;
+}
 
 .bar-container {
   display: flex;
@@ -16,9 +19,9 @@
   background-color: #F9FCFF;
   border: 2px solid #003366;
   color: #000;
-  font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-weight: normal;
 }
 
 

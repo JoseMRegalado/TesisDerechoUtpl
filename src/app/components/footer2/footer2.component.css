@@ -1,0 +1,67 @@
+.final {
+  background-color: #044170;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  padding: 1rem 3%;
+  width: 100%;
+  gap: 30%;
+}
+
+.contacto{
+  display: flex;
+  flex-direction: column;
+  width: 27%;
+  line-height: 30px;
+  font-size: 12px;
+  gap: 30px;
+
+}
+
+.simbolo{
+  display: flex;
+  font-size: 18px;
+  align-items: center;
+  gap: 15px;
+}
+
+.enlaces{
+  display: flex;
+  width: 60%;
+  gap: 40px;
+}
+
+.enlaces h3{
+  font-size: 14px;
+}
+
+.enlaces h5{
+  line-height: 25px;
+  width: 112px;
+  font-weight: 400;
+  font-size: 11px;
+}
+
+.principal{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-right: 5%;
+}
+
+.soporte{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-right: 5%;
+
+}
+
+.opciones-redes {
+  display: flex;
+}
+
+.redes{
+
+}
