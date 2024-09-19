@@ -1,7 +1,23 @@
 <app-header></app-header>
+
+<section class="seccion-4">
+  <div class="leyenda">
+    <img src="assets/img/linea.svg" alt="Linea">
+    <span>
+      AT + 360 U-T-S
+    </span>
+  </div>
+  <div class="plataforma">
+    <h3>
+      Plataforma Transformación Académica + Visor 360 Docente - Estudiante
+    </h3>
+  </div>
+</section>
+
 <app-bar></app-bar>
 
 <h2>Ingreso y validación de documentación</h2>
+
 
 <table>
   <thead>
@@ -40,6 +56,11 @@
   </tbody>
 </table>
 
-<button *ngIf="!addingDocument" (click)="addDocument()">Agregar</button>
-<button *ngIf="addingDocument" (click)="confirmDocument()">Confirmar</button>
+
+  <button *ngIf="!addingDocument" (click)="addDocument()">Agregar</button>
+
+
+  <button *ngIf="addingDocument" (click)="confirmDocument()">Confirmar</button>
+
+
 <app-footer2></app-footer2>
