@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ConsultasService } from '../../services/consultas.service';
 import { LoginService } from '../../services/login.service';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';  // Importación de autoTable
 
 @Component({
   selector: 'app-documentos',
@@ -9,6 +11,7 @@ import { LoginService } from '../../services/login.service';
 })
 export class DocumentosComponent implements OnInit {
   documents: any[] = [];
+  personalData: any = {};
   newDocument: any = {
     descripcion: '',
     fechaIngreso: null,
@@ -20,16 +23,15 @@ export class DocumentosComponent implements OnInit {
   constructor(private consultasService: ConsultasService, private loginService: LoginService) {}
 
   ngOnInit() {
-    // Obtén el usuario loggeado y carga sus documentos
     this.loginService.getCurrentUser().subscribe(user => {
       if (user) {
         this.currentUserId = user.id;
         this.loadDocuments();
+        this.loadPersonalData();
       }
     });
   }
 
-  // Método para cargar los documentos del usuario actual
   loadDocuments() {
     this.consultasService.getDocumentsByUser(this.currentUserId).subscribe((docs) => {
       this.documents = docs;
@@ -38,6 +40,12 @@ export class DocumentosComponent implements OnInit {
 
   addDocument() {
     this.addingDocument = true;
+  }
+
+  loadPersonalData() {
+    this.consultasService.getPersonalDataByUserId(this.currentUserId).subscribe((data) => {
+      this.personalData = data;
+    });
   }
 
   onFileSelected(event: any) {
@@ -57,10 +65,9 @@ export class DocumentosComponent implements OnInit {
             docente: 'En espera',
             director: 'En espera',
             secretario: 'En espera',
-            userId: this.currentUserId  // Asociamos el documento al usuario loggeado
+            userId: this.currentUserId
           };
 
-          // Guardar el documento en Firestore
           this.consultasService.saveDocument(documentData).then(() => {
             this.documents.push(documentData);
             this.newDocument = { descripcion: '', fechaIngreso: null, file: null };
@@ -71,5 +78,46 @@ export class DocumentosComponent implements OnInit {
         }
       });
     }
+  }
+
+  printDocument() {
+    const doc = new jsPDF();
+
+    // Título
+    doc.setFontSize(18);
+    doc.text('VISOR 360 DOCENTE - ESTUDIANTE', 10, 10);
+
+    // Información personal
+    doc.setFontSize(12);
+    doc.text(`Nombre: ${this.personalData.firstName} ${this.personalData.lastName}`, 10, 20);
+    doc.text(`Correo: ${this.personalData.utplEmail}`, 10, 30);
+    doc.text(`Contacto: ${this.personalData.mobile}`, 10, 40);
+    doc.text('Docente: Tais Balcazar', 10, 50);
+
+    // Espacio antes de la tabla
+    doc.text('Documentos Subidos:', 10, 60);
+
+    // Tabla con documentos
+    const columns = ["Documento digital", "Descripción de Documento", "Fecha de ingreso", "Fecha de validación", "Observaciones", "Docente", "Director", "Secretario"];
+    const rows = this.documents.map(doc => [
+      'Documento',
+      doc.descripcion,
+      doc.fechaIngreso,
+      doc.fechaValidacion || '-',
+      doc.observaciones || 'Ninguna',
+      doc.docente || 'En espera',
+      doc.director || 'En espera',
+      doc.secretario || 'En espera'
+    ]);
+
+    // Usar autoTable para generar la tabla en el PDF
+    (doc as any).autoTable({
+      head: [columns],
+      body: rows,
+      startY: 70,
+    });
+
+    // Abrir el PDF en una nueva pestaña
+    window.open(doc.output('bloburl'));
   }
 }

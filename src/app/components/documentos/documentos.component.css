@@ -125,3 +125,8 @@ tfoot button {
   border-radius: 5px;
   cursor: pointer;
 }
+
+.btns{
+  display: flex;
+  justify-content: center;
+}

@@ -18,6 +18,10 @@ import { BarComponent } from './components/bar/bar.component';
 import { DocumentosComponent } from './components/documentos/documentos.component';
 import { Footer2Component } from './components/footer2/footer2.component';
 
+import { TextComponent } from './text/text.component';
+import { AdminDataComponent } from './components/admin-data/admin-data.component';
+import {AngularFireFunctionsModule} from "@angular/fire/compat/functions";
+
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: '', component: HomeComponent},
@@ -26,10 +30,11 @@ const appRoutes: Routes = [
   {path: 'profile', component: ProfileComponent},
   { path: 'personal', component: PersonalDataComponent },
   { path: 'docs', component: DocumentosComponent },
+  { path: 'data', component: AdminDataComponent },
 ];
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent, HomeComponent, LoginComponent, InfoComponent, ProfileComponent, PersonalDataComponent, BarComponent, DocumentosComponent, Footer2Component],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, HomeComponent, LoginComponent, InfoComponent, ProfileComponent, PersonalDataComponent, BarComponent, DocumentosComponent, Footer2Component,  TextComponent, AdminDataComponent],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -38,6 +43,7 @@ const appRoutes: Routes = [
     RouterOutlet,
     RouterModule.forRoot(appRoutes),
     FormsModule,
+    AngularFireFunctionsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

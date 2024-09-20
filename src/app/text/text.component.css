@@ -1,0 +1,8 @@
+div{
+  color: white;
+  background-color: #003366;
+  font-family: "Plus Jakarta", sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}

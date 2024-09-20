@@ -1,0 +1,23 @@
+<div class="container">
+  <h1>Datos Administrativos del Trabajo de Titulación</h1>
+
+  <!-- Primer tipo de recuadro (se repite 8 veces) -->
+  <div *ngFor="let recuadro of recuadros" class="recuadro">
+    <h3>{{ recuadro.titulo }}</h3>
+    <p>Fecha: {{ recuadro.fechaEnvio ? recuadro.fechaEnvio : currentDate }}</p>
+
+    <input type="email" [(ngModel)]="recuadro.correo" placeholder="Correo electrónico" />
+    <input type="file" (change)="onFileSelected($event, recuadro)" accept="application/pdf" />
+    <button (click)="sendEmail(recuadro)">Enviar</button>
+  </div>
+
+  <!-- Segundo tipo de recuadro -->
+  <div class="recuadro">
+    <h3>Aprobación del trabajo de titulación del director</h3>
+    <p>Fecha: {{ fechaEnvioDirector ? fechaEnvioDirector : currentDate }}</p>
+
+    <p>Director: {{ director.firstName }} {{ director.lastName }}</p>
+    <input type="datetime-local" [(ngModel)]="selectedDateTime" />
+    <button (click)="sendToDirector()">Enviar</button>
+  </div>
+</div>

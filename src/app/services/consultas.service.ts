@@ -98,6 +98,16 @@ export class ConsultasService {
       );
   }
 
+  // Método para obtener los datos personales de un usuario por su userId
+  getPersonalDataByUserId(userId: string): Observable<any> {
+    return this.firestore.collection('personalData').doc(userId).valueChanges();
+  }
+
+  // Obtener usuarios por rol
+  getUserByRole(role: string): Observable<any> {
+    return this.firestore.collection('users', ref => ref.where('role', '==', role)).valueChanges();
+  }
+
 
 
 }

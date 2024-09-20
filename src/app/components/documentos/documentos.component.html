@@ -1,5 +1,5 @@
 <app-header></app-header>
-
+<app-text></app-text>
 <section class="seccion-4">
   <div class="leyenda">
     <img src="assets/img/linea.svg" alt="Linea">
@@ -48,19 +48,21 @@
     <td><input type="text" [(ngModel)]="newDocument.descripcion" /></td>
     <td><input type="date" [(ngModel)]="newDocument.fechaIngreso" /></td>
     <td>-</td>
-    <td>Ninguna</td>
-    <td>En espera</td>
-    <td>En espera</td>
-    <td>En espera</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
   </tr>
   </tbody>
 </table>
 
+<div class="btns">
+  <button *ngIf="!addingDocument" (click)="addDocument()">Agregar +</button>
 
-  <button *ngIf="!addingDocument" (click)="addDocument()">Agregar</button>
 
+  <button *ngIf="addingDocument" (click)="confirmDocument()">Guardar</button>
 
-  <button *ngIf="addingDocument" (click)="confirmDocument()">Confirmar</button>
-
+  <button *ngIf="!addingDocument" (click)="printDocument()">Imprimir</button>
+</div>
 
 <app-footer2></app-footer2>
