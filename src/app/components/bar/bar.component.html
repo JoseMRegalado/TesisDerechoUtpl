@@ -1,12 +1,10 @@
 <div class="containerFull">
   <nav class="bar-container">
-    <button [routerLink]="['/personal']" routerLinkActive="active">Datos Personales</button>
-    <button [routerLink]="['/docs']" routerLinkActive="active">Validación de Documentos</button>
-    <button [routerLink]="['/home']" routerLinkActive="active">Datos Administrativos del Trabajo de Titulación</button>
-    <button [routerLink]="['/home']" routerLinkActive="active">Evaluación Ciclo Académico</button>
-    <button [routerLink]="['/home']" routerLinkActive="active">Flujo de Tesis Director - Estudiante</button>
+    <button [routerLink]="['/personal']" [queryParams]="{ tesisId: tesisId }" routerLinkActive="active">Datos Personales</button>
+    <button [routerLink]="['/docs']" [queryParams]="{ tesisId: tesisId }" routerLinkActive="active">Validación de Documentos</button>
+    <button [routerLink]="['/data']" [queryParams]="{ tesisId: tesisId }" routerLinkActive="active">Datos Administrativos del Trabajo de Titulación</button>
+    <button [routerLink]="['/ciclo']" [queryParams]="{ tesisId: tesisId }" routerLinkActive="active">Evaluación Ciclo Académico</button>
+    <button [routerLink]="['/flujo']" [queryParams]="{ tesisId: tesisId }" routerLinkActive="active">Flujo de Tesis Director - Estudiante</button>
   </nav>
   <hr class="linea">
 </div>
-
-

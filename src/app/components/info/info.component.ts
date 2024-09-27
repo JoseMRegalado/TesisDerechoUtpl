@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { ConsultasService } from '../../services/consultas.service';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import Class from '../../interfaces/classes.interface';
 
 @Component({
@@ -17,38 +18,78 @@ export class InfoComponent implements OnInit {
   selectedClass: string | null = null;
 
   filteredClasses$: Observable<(Class & { professorName: string })[]> | null = null;
+  isCreatingTesis = false;  // Bandera para evitar creación duplicada
 
-  constructor(private loginService: LoginService, private consultasService: ConsultasService,private router: Router) {}
+  constructor(
+    private loginService: LoginService,
+    private consultasService: ConsultasService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loginService.getCurrentUser().subscribe(user => {
       if (user) {
-        this.availableRoles = this.getRolesForUser(user.role);  // Filtra los roles disponibles según el usuario
+        this.availableRoles = this.getRolesForUser(user.role);
       }
     });
   }
 
   getRolesForUser(userRole: string): string[] {
-    // Filtra los roles según el rol del usuario loggeado
     const roles = ['estudiante', 'secretario', 'director', 'docente'];
-    return roles.filter(role => role === userRole); // Solo muestra el rol del usuario
+    return roles.filter(role => role === userRole);
   }
 
   onModalityChange(modality: string): void {
     this.selectedModality = modality;
-
-    // Consulta las clases según la modalidad
     this.filteredClasses$ = this.consultasService.getClassesByModality(modality);
   }
 
   isButtonEnabled(): boolean {
-    return this.selectedRole !== null && this.selectedClass !== null;
+    return this.selectedRole !== null && this.selectedClass !== null && !this.isCreatingTesis;
   }
 
-  // Redirigir al componente de perfil con la clase seleccionada
   goToProfile(): void {
     if (this.isButtonEnabled()) {
-      this.router.navigate(['/profile'], { queryParams: { classId: this.selectedClass } });
+      this.isCreatingTesis = true;  // Desactivar el botón mientras se crea la tesis
+
+      // Obtener usuario actual
+      this.loginService.getCurrentUser()
+        .pipe(
+          switchMap(user => {
+            if (user && this.selectedClass) {
+              // Obtener datos de la clase seleccionada
+              return this.consultasService.getClassById(this.selectedClass!).pipe(
+                switchMap(classData => {
+                  if (classData) {
+                    const tesisData = {
+                      studentName: `${user.firstName} ${user.lastName}`,
+                      professorName: classData.professorName,
+                      className: classData.name,
+                      status: 'faltante',
+                      userId: user.id
+                    };
+                    // Crear la tesis
+                    return this.consultasService.saveTesis(tesisData);
+                  }
+                  throw new Error('No se pudo obtener los datos de la clase.');
+                })
+              );
+            } else {
+              throw new Error('Usuario no autenticado o clase no seleccionada.');
+            }
+          })
+        )
+        .subscribe({
+          next: (tesisId) => {
+            // Redirigir al perfil con el ID del documento de tesis recién creado
+            this.router.navigate(['/profile'], { queryParams: { tesisId: tesisId } });
+            this.isCreatingTesis = false;  // Volver a activar el botón después de la creación
+          },
+          error: (error) => {
+            console.error('Error al crear la tesis:', error);
+            this.isCreatingTesis = false;  // Rehabilitar el botón si ocurre un error
+          }
+        });
     }
   }
 }

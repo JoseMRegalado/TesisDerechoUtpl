@@ -1,0 +1,87 @@
+<app-header></app-header>
+<app-bar></app-bar>
+<app-text></app-text>
+<!-- flujo.component.html -->
+<div>
+  <h1>Flujo de Tesis</h1>
+
+  <!-- Botón para agregar nueva evidencia -->
+  <button (click)="openAddDialog()">Agregar Evidencia</button>
+
+  <!-- Tabla para mostrar las evidencias -->
+  <table>
+    <thead>
+    <tr>
+      <th>Periodo</th>
+      <th>Bimestre</th>
+      <th>Fecha de Registro</th>
+      <th>Descripción</th>
+      <th>Evidencia</th>
+      <th>Comentario</th>
+      <th>Usuario</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let evidencia of evidencias">
+      <td>{{ evidencia.periodo }}</td>
+      <td>{{ evidencia.bimestre }}</td>
+      <td>{{ evidencia.fechaRegistro | date }}</td>
+      <td>{{ evidencia.descripcion }}</td>
+      <td><a [href]="evidencia.evidenciaUrl" target="_blank">Ver archivo</a></td>
+      <td>{{ evidencia.comentario }}</td>
+      <td>{{ evidencia.usuarioNombre }} {{ evidencia.usuarioApellido }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal para agregar una nueva evidencia -->
+  <div *ngIf="mostrarDialogoAgregar" class="modal">
+    <h2>Agrega una nueva evidencia</h2>
+    <form (ngSubmit)="submit()">
+      <div>
+        <label>Autor: </label>
+        <span>{{ usuarioLoggeado?.firstName }} {{ usuarioLoggeado?.lastName }}</span>
+      </div>
+
+      <div>
+        <label>Periodo: </label>
+        <select [(ngModel)]="form.periodo" name="periodo" required>
+          <option value="Oct/Feb">Oct/Feb</option>
+          <option value="Abr/Ago">Abr/Ago</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Fecha de Registro: </label>
+        <input type="date" [(ngModel)]="form.fechaRegistro" name="fechaRegistro" required>
+      </div>
+
+      <div>
+        <label>Descripción: </label>
+        <input type="text" [(ngModel)]="form.descripcion" name="descripcion" required>
+      </div>
+
+      <div>
+        <label>Comentario: </label>
+        <input type="text" [(ngModel)]="form.comentario" name="comentario">
+      </div>
+
+      <div>
+        <label>Bimestre: </label>
+        <select [(ngModel)]="form.bimestre" name="bimestre" required>
+          <option value="primero">Primero</option>
+          <option value="segundo">Segundo</option>
+        </select>
+
+        <label>Documento: </label>
+        <input type="file" (change)="onFileSelected($event)" required>
+      </div>
+
+      <div class="modal-buttons">
+        <button type="button" (click)="cerrarDialogo()">Cancelar</button>
+        <button type="submit">Crear</button>
+      </div>
+    </form>
+  </div>
+</div>
+<app-footer2></app-footer2>

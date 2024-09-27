@@ -1,0 +1,107 @@
+<app-header></app-header>
+<app-text></app-text>
+<app-bar></app-bar>
+<div class="container">
+  <h2>Evaluación Ciclo Académico</h2>
+
+
+  <div class="cont">
+    <!-- Materias Section -->
+    <div class="section">
+      <h3>Materias</h3>
+      <div class="grid">
+        <div>
+          <label for="practicum1">Practicum 1</label>
+          <select id="practicum1" [(ngModel)]="materias.practicum1">
+            <option value="Aprobado">Aprobado</option>
+            <option value="Reprobado">Reprobado</option>
+          </select>
+        </div>
+        <div>
+          <label for="practicum2">Practicum 2</label>
+          <select id="practicum2" [(ngModel)]="materias.practicum2">
+            <option value="Aprobado">Aprobado</option>
+            <option value="Reprobado">Reprobado</option>
+          </select>
+        </div>
+        <div>
+          <label for="gestion1">Gestión Productiva 1</label>
+          <select id="gestion1" [(ngModel)]="materias.gestion1">
+            <option value="Aprobado">Aprobado</option>
+            <option value="Reprobado">Reprobado</option>
+          </select>
+        </div>
+        <div>
+          <label for="gestion2">Gestión Productiva 2</label>
+          <select id="gestion2" [(ngModel)]="materias.gestion2">
+            <option value="Aprobado">Aprobado</option>
+            <option value="Reprobado">Reprobado</option>
+          </select>
+        </div>
+      </div>
+      <button (click)="guardarMaterias()">Enviar</button>
+    </div>
+
+    <!-- Bimestre Section -->
+    <div class="section">
+      <h3>Bimestre</h3>
+      <div class="grid">
+        <div>
+          <label for="primerBimestre">Primer Bimestre</label>
+          <input id="primerBimestre" type="number" [(ngModel)]="bimestres.primerBimestre" min="1" max="10">
+        </div>
+        <div>
+          <label for="segundoBimestre">Segundo Bimestre</label>
+          <input id="segundoBimestre" type="number" [(ngModel)]="bimestres.segundoBimestre" min="1" max="10">
+        </div>
+      </div>
+      <button (click)="guardarBimestres()">Enviar</button>
+    </div>
+  </div>
+
+  <div class="cont">
+    <!-- Fecha Avances Section -->
+    <div class="section">
+      <h3>Fecha Avances</h3>
+      <div class="grid">
+        <div>
+          <label for="primerAvance">Primer Avance</label>
+          <input id="primerAvance" type="date" [(ngModel)]="fechas.primerAvance">
+        </div>
+        <div>
+          <label for="segundoAvance">Segundo Avance</label>
+          <input id="segundoAvance" type="date" [(ngModel)]="fechas.segundoAvance">
+        </div>
+      </div>
+      <button (click)="guardarFechas()">Enviar</button>
+    </div>
+
+    <!-- Aprobación Sections -->
+    <div class="section">
+      <h3>Aprobación</h3>
+      <div class="grid">
+        <div>
+          <label for="aprobacion1">Abril - Agosto</label>
+          <input id="aprobacion1" type="date" [(ngModel)]="fechas.aprobacion1">
+        </div>
+      </div>
+      <button (click)="guardarAprobaciones()">Enviar</button>
+    </div>
+
+    <!-- Aprobación Sections -->
+    <div class="section">
+      <h3>Aprobación</h3>
+      <div class="grid">
+        <div>
+          <label for="aprobacion2">Octubre - Febrero</label>
+          <input id="aprobacion2" type="date" [(ngModel)]="fechas.aprobacion2">
+        </div>
+      </div>
+      <button (click)="guardarAprobaciones2()">Enviar</button>
+    </div>
+  </div>
+
+
+</div>
+<app-footer2></app-footer2>
+

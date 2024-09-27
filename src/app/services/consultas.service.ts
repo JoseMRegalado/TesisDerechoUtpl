@@ -103,6 +103,60 @@ export class ConsultasService {
     return this.firestore.collection('personalData').doc(userId).valueChanges();
   }
 
+  // Método para guardar un documento en la colección 'tesis'
+  // Método para guardar un documento en la colección 'tesis'
+  saveTesis(tesisData: any): Observable<string> {
+    return new Observable<string>(observer => {
+      this.firestore.collection('tesis').add(tesisData).then(docRef => {
+        observer.next(docRef.id); // Retorna el ID del documento creado
+        observer.complete();
+      }).catch(error => {
+        observer.error(error);
+      });
+    });
+  }
+
+  updateTesis(tesisId: string, updateData: any): Observable<void> {
+    return new Observable<void>(observer => {
+      this.firestore.collection('tesis').doc(tesisId).update(updateData)
+        .then(() => {
+          observer.next();
+          observer.complete();
+        })
+        .catch(error => {
+          observer.error(error);
+        });
+    });
+  }
+
+
+  updateTesis1(tesisId: string, data: any): Promise<void> {
+    console.log('Actualizando tesis con ID:', tesisId, 'con los datos:', data);
+    return this.firestore.collection('tesis').doc(tesisId).update(data)
+      .then(() => console.log('Datos actualizados correctamente'))
+      .catch(error => console.error('Error al actualizar:', error));
+  }
+
+
+
+  // Método para obtener un documento de la colección 'tesis' por su ID
+  getTesisById(tesisId: string): Observable<any> {
+    return this.firestore.collection('tesis').doc(tesisId).valueChanges();
+  }
+
+  // Método para obtener documentos filtrados por tesisId
+  getDocumentsByTesisId(tesisId: string): Observable<any[]> {
+    return this.firestore.collection('documents', ref => ref.where('tesisId', '==', tesisId))
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as object;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+
+
   // Obtener usuarios por rol
   getUserByRole(role: string): Observable<any> {
     return this.firestore.collection('users', ref => ref.where('role', '==', role)).valueChanges();

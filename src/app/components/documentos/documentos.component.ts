@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ConsultasService } from '../../services/consultas.service';
 import { LoginService } from '../../services/login.service';
 import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';  // Importación de autoTable
+import 'jspdf-autotable';
+import {ActivatedRoute} from "@angular/router";  // Importación de autoTable
 
 @Component({
   selector: 'app-documentos',
@@ -19,10 +20,20 @@ export class DocumentosComponent implements OnInit {
   };
   addingDocument = false;
   currentUserId: string = '';
+  tesisId: string | null = null;
 
-  constructor(private consultasService: ConsultasService, private loginService: LoginService) {}
+  constructor(private consultasService: ConsultasService, private loginService: LoginService,
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
+    // Obtener el parámetro tesisId de los queryParams
+    this.route.queryParams.subscribe(params => {
+      this.tesisId = params['tesisId'];
+      console.log('Tesis ID:', this.tesisId);
+      this.loadDocuments();
+      this.loadPersonalData();
+    });
+
     this.loginService.getCurrentUser().subscribe(user => {
       if (user) {
         this.currentUserId = user.id;
@@ -31,6 +42,7 @@ export class DocumentosComponent implements OnInit {
       }
     });
   }
+
 
   loadDocuments() {
     this.consultasService.getDocumentsByUser(this.currentUserId).subscribe((docs) => {

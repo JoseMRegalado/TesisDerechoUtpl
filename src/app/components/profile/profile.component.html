@@ -16,7 +16,7 @@
 
   <div class="question-section">
     <h3>{{ questions[currentQuestionIndex] }}</h3>
-    <input type="text" placeholder="Respuesta...">
+    <input type="text" [(ngModel)]="currentAnswer" placeholder="Respuesta..."> <!-- Enlace bidireccional con ngModel -->
     <button (click)="nextQuestion()">{{ buttonText }}</button>
   </div>
 </div>
