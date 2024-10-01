@@ -23,6 +23,7 @@ import { AdminDataComponent } from './components/admin-data/admin-data.component
 import {AngularFireFunctionsModule} from "@angular/fire/compat/functions";
 import { CicloComponent } from './components/ciclo/ciclo.component';
 import { FlujoComponent } from './components/flujo/flujo.component';
+import { HeadingComponent } from './components/heading/heading.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -38,7 +39,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent, HomeComponent, LoginComponent, InfoComponent, ProfileComponent, PersonalDataComponent, BarComponent, DocumentosComponent, Footer2Component,  TextComponent, AdminDataComponent, CicloComponent, FlujoComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, HomeComponent, LoginComponent, InfoComponent, ProfileComponent, PersonalDataComponent, BarComponent, DocumentosComponent, Footer2Component,  TextComponent, AdminDataComponent, CicloComponent, FlujoComponent, HeadingComponent],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),

@@ -1,33 +1,113 @@
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 }
 
-.section {
-  margin-bottom: 30px;
-  border: 1px solid #e0e0e0;
-  padding: 20px;
-  border-radius: 10px;
+h2 {
+  text-align: center;
+  color: #333;
+  font-size: 28px;
+  margin-bottom: 40px;
+  margin-top: 20px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+/* Section Styles */
+.cont {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
+.section {
+  background-color: #fff;
+  border: 1.5px solid rgb(4, 65, 112);
+  border-radius: 10px;
+  padding: 20px;
+  flex: 1 1 calc(50% - 20px);
+  width: 741px;
+}
+
+.section-2{
+  background-color: #fff;
+  border: 1.5px solid rgb(4, 65, 112);
+  border-radius: 10px;
+  padding: 20px;
+  width: 372px;
+}
+
+h3 {
+  text-align: center;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.grid div {
+  flex: 1;
+  text-align: center;
+}
+
+label {
+  display: block;
+  font-size: 12.9px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+select, input[type="number"], input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
 button {
-  background-color: #004080;
-  color: white;
+  background-color: #044170;
+  color: #fff;
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
+  font-size: 14px;
   cursor: pointer;
+  display: block;
+  margin: 20px auto 0;
 }
 
-
-.cont{
-  display: flex;
-  justify-content: space-evenly;
+button:hover {
+  background-color: #888;
 }
+
+/* Specific Styles for Validation Button */
+button.validado {
+  background-color: #888;
+  color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cont {
+    flex-direction: column;
+  }
+
+  .section {
+    flex: 1 1 100%;
+  }
+  .section-2 {
+    flex: 1 1 100%;
+  }
+}
+
