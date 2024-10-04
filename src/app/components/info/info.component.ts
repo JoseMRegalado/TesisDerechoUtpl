@@ -61,13 +61,16 @@ export class InfoComponent implements OnInit {
               return this.consultasService.getClassById(this.selectedClass!).pipe(
                 switchMap(classData => {
                   if (classData) {
+                    // Crear el objeto de la tesis con la información del usuario y clase
                     const tesisData = {
                       studentName: `${user.firstName} ${user.lastName}`,
                       professorName: classData.professorName,
                       className: classData.name,
                       status: 'faltante',
                       userId: user.id
+                      // No se incluye personalData
                     };
+
                     // Crear la tesis
                     return this.consultasService.saveTesis(tesisData);
                   }
@@ -92,4 +95,7 @@ export class InfoComponent implements OnInit {
         });
     }
   }
+
+
+
 }

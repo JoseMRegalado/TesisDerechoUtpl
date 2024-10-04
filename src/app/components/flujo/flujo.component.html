@@ -38,52 +38,68 @@
 
   <!-- Modal para agregar una nueva evidencia -->
   <div *ngIf="mostrarDialogoAgregar" class="modal">
-    <h2>Agrega una nueva evidencia</h2>
-    <form (ngSubmit)="submit()">
-      <div>
-        <label>Autor: </label>
-        <span>{{ usuarioLoggeado?.firstName }} {{ usuarioLoggeado?.lastName }}</span>
+    <div class="modal-content">
+      <div class="centro">
+        <h2>Agregar nueva evidencia</h2>
+
+        <div class="author-info">
+          <label><b>Autor: </b></label>
+          <span> {{ usuarioLoggeado?.firstName }} {{ usuarioLoggeado?.lastName }}</span>
+        </div>
+
+        <div class="periodo-info">
+          <label><b>Periodo: </b></label>
+          <span> Oct/2023 - Feb/2024</span>
+        </div>
       </div>
 
-      <div>
-        <label>Periodo: </label>
-        <select [(ngModel)]="form.periodo" name="periodo" required>
-          <option value="Oct/Feb">Oct/Feb</option>
-          <option value="Abr/Ago">Abr/Ago</option>
-        </select>
-      </div>
 
-      <div>
-        <label>Fecha de Registro: </label>
-        <input type="date" [(ngModel)]="form.fechaRegistro" name="fechaRegistro" required>
-      </div>
+      <form (ngSubmit)="submit()">
 
-      <div>
-        <label>Descripción: </label>
-        <input type="text" [(ngModel)]="form.descripcion" name="descripcion" required>
-      </div>
 
-      <div>
-        <label>Comentario: </label>
-        <input type="text" [(ngModel)]="form.comentario" name="comentario">
-      </div>
+        <div class="sup">
+          <div class="form-group">
+            <label>Fecha de registro</label>
+            <input type="date" [(ngModel)]="form.fechaRegistro" name="fechaRegistro" required>
+          </div>
 
-      <div>
-        <label>Bimestre: </label>
-        <select [(ngModel)]="form.bimestre" name="bimestre" required>
-          <option value="primero">Primero</option>
-          <option value="segundo">Segundo</option>
-        </select>
+          <div class="form-group">
+            <label>Descripción</label>
+            <input type="text" [(ngModel)]="form.descripcion" name="descripcion" placeholder="Redactar..." required>
+          </div>
 
-        <label>Documento: </label>
-        <input type="file" (change)="onFileSelected($event)" required>
-      </div>
+          <div class="form-group">
+            <label>Comentario</label>
+            <input type="text" [(ngModel)]="form.comentario" name="comentario" placeholder="Redactar...">
+          </div>
+        </div>
 
-      <div class="modal-buttons">
-        <button type="button" (click)="cerrarDialogo()">Cancelar</button>
-        <button type="submit">Crear</button>
-      </div>
-    </form>
+
+
+        <div class="inf">
+          <div class="form-group">
+            <label>Selecciona bimestre</label>
+            <select [(ngModel)]="form.bimestre" name="bimestre" required>
+              <option value="" disabled>Selecciona una opción</option>
+              <option value="primero">Primero</option>
+              <option value="segundo">Segundo</option>
+            </select>
+          </div>
+
+          <div class="file-upload">
+            <label>Carga aquí tu archivo <span class="required">*</span></label>
+            <input type="file" (change)="onFileSelected($event)" required>
+          </div>
+        </div>
+
+
+        <div class="modal-buttons">
+          <button type="button" class="cancel-btn" (click)="cerrarDialogo()">Cancelar</button>
+          <button type="submit" class="submit-btn">Crear</button>
+        </div>
+      </form>
+    </div>
   </div>
+
 </div>
 <app-footer2></app-footer2>

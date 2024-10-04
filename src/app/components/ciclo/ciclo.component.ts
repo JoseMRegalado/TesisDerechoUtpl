@@ -56,8 +56,6 @@ export class CicloComponent implements OnInit {
       const fechaAvances = {
         primerAvance: this.fechas.primerAvance,
         segundoAvance: this.fechas.segundoAvance,
-        aprobacion1: this.fechas.aprobacion1,
-        aprobacion2: this.fechas.aprobacion2
       };
       this.consultasService.updateTesis1(this.tesisId, { fechas: fechaAvances });
     }
@@ -65,17 +63,17 @@ export class CicloComponent implements OnInit {
 
   guardarAprobaciones(): void {
     if (this.tesisId) {
-      this.consultasService.updateTesis1(this.tesisId, {
-        'fechas.aprobacion1': this.fechas.aprobacion1,
-      });
+      this.consultasService.updateTesis1(this.tesisId, {fechas:{
+        'Aprobacion1': this.fechas.aprobacion1,
+      }});
     }
   }
 
   guardarAprobaciones2(): void {
     if (this.tesisId) {
-      this.consultasService.updateTesis1(this.tesisId, {
-        'fechas.aprobacion2': this.fechas.aprobacion2
-      });
+      this.consultasService.updateTesis1(this.tesisId, {fechas:{
+          'Aprobacion2': this.fechas.aprobacion2,
+        }});
     }
   }
 }

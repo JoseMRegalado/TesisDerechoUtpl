@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {AngularFirestore, DocumentData} from '@angular/fire/compat/firestore';
 import {Observable, combineLatest, of, finalize} from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import Class from '../interfaces/classes.interface';
 import User from '../interfaces/user.interface';
 import {AngularFireStorage} from "@angular/fire/compat/storage";
+import firebase from "firebase/compat";
+import DocumentReference = firebase.firestore.DocumentReference;
 
 @Injectable({
   providedIn: 'root'
@@ -51,9 +53,22 @@ export class ConsultasService {
     );
   }
 
-  // Método para guardar los datos personales
-  savePersonalData(userId: string, personalData: any) {
-    return this.firestore.collection('personalData').doc(userId).set(personalData);
+
+  // Método para guardar datos personales como subcolección
+  savePersonalData(userId: string, personalData: any): Promise<void> {
+    // Crear una subcolección llamada 'personalData' dentro del documento del usuario
+    return this.firestore
+      .collection('tesis')
+      .doc(userId)
+      .collection('personalData')
+      .add(personalData) // 'add' genera un ID único para cada documento en la subcolección
+      .then(() => {
+        console.log("Datos personales guardados correctamente.");
+      })
+      .catch((error) => {
+        console.error("Error al guardar los datos personales: ", error);
+        throw error;
+      });
   }
 
   // Método para subir una imagen a Firebase Storage
@@ -103,7 +118,7 @@ export class ConsultasService {
     return this.firestore.collection('personalData').doc(userId).valueChanges();
   }
 
-  // Método para guardar un documento en la colección 'tesis'
+
   // Método para guardar un documento en la colección 'tesis'
   saveTesis(tesisData: any): Observable<string> {
     return new Observable<string>(observer => {
@@ -129,13 +144,28 @@ export class ConsultasService {
     });
   }
 
+  saveTesisData(thesisId: string, personalData: any): Promise<void> {
+    const thesisRef = this.firestore.collection('tesis').doc(thesisId); // Obtiene la referencia de la tesis
+    return thesisRef.set({ personalData }, { merge: true }); // Utiliza { merge: true } para actualizar la tesis existente
+  }
+
+
+
+
 
   updateTesis1(tesisId: string, data: any): Promise<void> {
     console.log('Actualizando tesis con ID:', tesisId, 'con los datos:', data);
-    return this.firestore.collection('tesis').doc(tesisId).update(data)
-      .then(() => console.log('Datos actualizados correctamente'))
+
+    // Crear un nuevo objeto con el campo "ciclo" que contiene los datos
+    const updatedData = {
+      ciclo: data
+    };
+
+    return this.firestore.collection('tesis').doc(tesisId).set(updatedData, { merge: true })
+      .then(() => console.log('Datos actualizados correctamente en el atributo "ciclo"'))
       .catch(error => console.error('Error al actualizar:', error));
   }
+
 
 
 
@@ -144,9 +174,35 @@ export class ConsultasService {
     return this.firestore.collection('tesis').doc(tesisId).valueChanges();
   }
 
-  // Método para obtener documentos filtrados por tesisId
+
+
+
+
+  // Obtener usuarios por rol
+  getUserByRole(role: string): Observable<any> {
+    return this.firestore.collection('users', ref => ref.where('role', '==', role)).valueChanges();
+  }
+
+
+  // Método para guardar un documento en la subcolección 'documents' de una tesis específica
+  saveDocumentInTesis(tesisId: string, documentData: any): Promise<void> {
+    return this.firestore
+      .collection('tesis') // Acceder a la colección 'tesis'
+      .doc(tesisId) // Seleccionar la tesis correspondiente
+      .collection('documents') // Subcolección 'documents'
+      .add(documentData) // Agregar el documento
+      .then(() => {
+        console.log('Documento guardado correctamente en la tesis.');
+      })
+      .catch(error => {
+        console.error('Error al guardar el documento en la tesis:', error);
+        throw error;
+      });
+  }
+
+// Método para obtener documentos desde la subcolección 'documents' dentro de una tesis específica
   getDocumentsByTesisId(tesisId: string): Observable<any[]> {
-    return this.firestore.collection('documents', ref => ref.where('tesisId', '==', tesisId))
+    return this.firestore.collection('tesis').doc(tesisId).collection('documents')
       .snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const data = a.payload.doc.data() as object;
@@ -156,11 +212,14 @@ export class ConsultasService {
       );
   }
 
-
-  // Obtener usuarios por rol
-  getUserByRole(role: string): Observable<any> {
-    return this.firestore.collection('users', ref => ref.where('role', '==', role)).valueChanges();
+  getPersonalDataFromTesis(tesisId: string): Observable<any> {
+    return this.firestore.collection('tesis').doc(tesisId).valueChanges().pipe(
+      map((tesis: any) => tesis ? tesis.personalData : null)  // Accede a personalData directamente
+    );
   }
+
+
+
 
 
 

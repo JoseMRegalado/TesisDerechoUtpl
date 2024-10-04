@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router } from '@angular/router';
 import {ConsultasService} from "../../services/consultas.service";
 import {LoginService} from "../../services/login.service";
 
@@ -35,10 +35,21 @@ export class PersonalDataComponent {
   hasScholarship: boolean = false;
   scholarshipPercentage: number | null = null;
 
+
+  tesisId: string | null = null;
+
   constructor(private router: Router,
               private loginService: LoginService,
-              private consultasService: ConsultasService
+              private consultasService: ConsultasService,
+              private route: ActivatedRoute,
   ) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.tesisId = params['tesisId'];
+      console.log('Tesis ID:', this.tesisId);
+    });
+  }
 
   toggleDisabilityFields() {
     if (!this.hasDisability) {
@@ -56,6 +67,11 @@ export class PersonalDataComponent {
 
   finalize() {
     if (this.isValid()) {
+      if (!this.tesisId) {
+        console.error("Tesis ID no está disponible.");
+        return; // Evita la ejecución si tesisId es null
+      }
+
       this.loginService.getCurrentUser().subscribe(user => {
         if (user) {
           const userId = user.id;
@@ -100,9 +116,9 @@ export class PersonalDataComponent {
               disabilityPercentage: this.disabilityPercentage,
               hasScholarship: this.hasScholarship,
               scholarshipPercentage: this.scholarshipPercentage,
-              idPhotoURL: downloadURLs[0] || null, // Asigna la URL de la foto de identificación
-              idDocPhotoURL: downloadURLs[1] || null, // Asigna la URL del documento de identificación
-              idDiscPhotoURL: downloadURLs[2] || null // Asigna la URL del documento de discapacidad (si aplica)
+              idPhotoURL: downloadURLs[0] || null,
+              idDocPhotoURL: downloadURLs[1] || null,
+              idDiscPhotoURL: downloadURLs[2] || null
             };
 
             // Filtrar propiedades undefined
@@ -110,11 +126,11 @@ export class PersonalDataComponent {
               Object.entries(personalData).filter(([_, v]) => v !== undefined)
             );
 
-            // Guardar los datos personales en Firestore
-            this.consultasService.savePersonalData(userId, personalData).then(() => {
-              this.router.navigate(['/home']);
+            // Guardar los datos personales como subcolección en la colección de tesis
+            this.consultasService.saveTesisData(this.tesisId!, personalData).then(() => {
+              this.router.navigate(['/docs'], { queryParams: { tesisId: this.tesisId } });
             }).catch(error => {
-              console.error("Error al guardar los datos personales: ", error);
+              console.error("Error al guardar los datos personales en la tesis: ", error);
             });
           }).catch(error => {
             console.error("Error al subir las imágenes: ", error);
@@ -123,6 +139,10 @@ export class PersonalDataComponent {
       });
     }
   }
+
+
+
+
 
   onFileSelected(event: any, field: 'idPhoto' | 'idDocPhoto' | 'idDiscPhoto') {
     const file: File = event.target.files[0];
@@ -137,7 +157,7 @@ export class PersonalDataComponent {
   isValid(): boolean {
     return (
       this.selectedDocument !== '' &&
-      this.firstName!== '' &&
+      this.firstName !== '' &&
       this.lastName !== '' &&
       this.gender !== '' &&
       this.nationality !== '' &&
@@ -145,13 +165,14 @@ export class PersonalDataComponent {
       this.city !== '' &&
       this.utplEmail !== '' &&
       this.personalEmail !== '' &&
-      this.postalCode != null &&
+      this.postalCode !== null &&
       this.country !== '' &&
       this.province !== '' &&
       this.landline !== '' &&
       this.mobile !== '' &&
-      this.idPhoto != null &&
-      this.idDocPhoto != null
+      (this.hasDisability ? (this.disabilityType !== '' && this.disabilityPercentage !== null) : true) &&
+      (this.hasScholarship ? this.scholarshipPercentage !== null : true)
     );
   }
+
 }
