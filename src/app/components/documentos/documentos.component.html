@@ -30,10 +30,25 @@
     <td>{{ doc.director || 'En espera' }}</td>
     <td>{{ doc.secretario || 'En espera' }}</td>
   </tr>
+
+
   <tr *ngIf="addingDocument">
-    <td><input type="file" (change)="onFileSelected($event)" /></td>
-    <td><input type="text" [(ngModel)]="newDocument.descripcion" /></td>
-    <td><input type="date" [(ngModel)]="newDocument.fechaIngreso" /></td>
+    <td>
+      <div class="file-upload-container">
+        <input type="file" id="idDoc" (change)="onFileSelected($event,'idDoc')" />
+        <label for="idDoc" class="custom-file-upload">
+          <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
+          Archivo
+        </label>
+      </div>
+    </td>
+
+    <td><input placeholder="Text" type="text" [(ngModel)]="newDocument.descripcion" /></td>
+    <td>
+      <div class="fecha-ingreso">
+        <input type="date" id="Date" [(ngModel)]="newDocument.fechaIngreso" />
+      </div>
+    </td>
     <td>-</td>
     <td>-</td>
     <td>-</td>
@@ -44,8 +59,7 @@
 </table>
 
 <div class="btns">
-  <button *ngIf="!addingDocument" (click)="addDocument()">Agregar +</button>
-
+  <button class="boton-agregar" *ngIf="!addingDocument" (click)="addDocument()">Agregar +</button>
 
   <button *ngIf="addingDocument" (click)="confirmDocument()">Guardar</button>
 

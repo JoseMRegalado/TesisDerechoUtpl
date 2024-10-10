@@ -82,7 +82,7 @@ export class DocumentosComponent implements OnInit {
   }
 
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any, field: 'idDoc') {
     this.newDocument.file = event.target.files[0];
   }
 

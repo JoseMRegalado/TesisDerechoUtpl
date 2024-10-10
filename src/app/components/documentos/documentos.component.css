@@ -97,3 +97,42 @@ tfoot button {
   display: flex;
   justify-content: center;
 }
+
+/* Diseño de boton agregar */
+
+.file-upload-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-file-upload {
+  display: flex;
+  border: 1px dashed #ccc;
+  border-radius: 10px;
+  padding: 5px;
+  width: 150px;
+  cursor: pointer;
+  color: #333;
+  font-size: 13px;
+  gap: 5px;
+  margin: 0;
+}
+
+#idDoc{
+  display: none;
+}
+
+.custom-file-upload img {
+  width: 15px;
+}
+
+.custom-file-upload:hover {
+  border-color: #0056b3;
+  background-color: #f9fcff;
+}
+
+/* Diseño de boton fecha */
+
+.fecha-ingreso input{
+
+}
