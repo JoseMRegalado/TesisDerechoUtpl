@@ -40,7 +40,7 @@
   <div *ngIf="mostrarDialogoAgregar" class="modal">
     <div class="modal-content">
       <div class="centro">
-        <h2>Agregar nueva evidencia</h2>
+        <h3>Agregar nueva evidencia</h3>
 
         <div class="author-info">
           <label><b>Autor: </b></label>
@@ -76,19 +76,28 @@
 
 
 
+
+
+
         <div class="inf">
           <div class="form-group">
             <label>Selecciona bimestre</label>
             <select [(ngModel)]="form.bimestre" name="bimestre" required>
-              <option value="" disabled>Selecciona una opción</option>
+              <option value="" disabled [ngValue]="null">Selecciona una opción</option>
               <option value="primero">Primero</option>
               <option value="segundo">Segundo</option>
             </select>
           </div>
 
+
           <div class="file-upload">
             <label>Carga aquí tu archivo <span class="required">*</span></label>
-            <input type="file" (change)="onFileSelected($event)" required>
+            <input type="file" id="fileUpload" (change)="onFileSelected($event, 'idDoc')" />
+            <label for="fileUpload" class="custom-file-upload">
+              <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
+              Adjunta tu documento aquí
+            </label>
+
           </div>
         </div>
 

@@ -27,7 +27,7 @@ h2 {
 .section {
   background-color: #fff;
   border: 1.5px solid rgb(4, 65, 112);
-  border-radius: 10px;
+  border-radius: 15px;
   padding: 20px;
   flex: 1 1 calc(50% - 20px);
   width: 741px;
@@ -80,7 +80,7 @@ button {
   color: #fff;
   padding: 10px 20px;
   border: none;
-  border-radius: 20px;
+  border-radius: 15px;
   font-size: 14px;
   cursor: pointer;
   display: block;

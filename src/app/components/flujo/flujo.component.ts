@@ -80,7 +80,7 @@ export class FlujoComponent implements OnInit {
   }
 
   // Captura el archivo seleccionado
-  onFileSelected(event: any) {
+  onFileSelected(event: any, field: 'idDoc') {
     this.documento = event.target.files[0];
   }
 

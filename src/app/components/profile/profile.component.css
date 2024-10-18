@@ -30,19 +30,28 @@
 }
 
 .descripcionDocente {
+  display: flex;
+  flex-direction: column;
   text-align: left;
-}
+  gap: 10px;
 
-.descripcionDocente h2 {
+}
+.teacherName{
+  color: rgb(0, 63, 114);
   font-size: 24px;
   font-weight: 700;
   margin-bottom: 8px;
 }
 
+.date{
+  color: rgba(88, 81, 81, 0.7);
+}
+
+
 .descripcionDocente p {
   font-size: 16px;
   line-height: 1.6;
-  color: #555;
+  color: black;
 }
 
 /* Título de la clase */
@@ -103,3 +112,5 @@
 .question-section button:hover {
   background-color: #ffa500;
 }
+
+
