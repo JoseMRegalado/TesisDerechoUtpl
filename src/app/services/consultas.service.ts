@@ -218,6 +218,43 @@ export class ConsultasService {
     );
   }
 
+  getTesisByUserId(userId: string | null): Observable<any[]> {
+    if (!userId) return of([]); // Retorna un array vacío si userId es null
+
+    return this.firestore.collection('tesis', ref => ref.where('userId', '==', userId))
+      .snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as any;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        }))
+      );
+  }
+
+
+
+  getAllTesis(): Observable<any[]> {
+    return this.firestore.collection('tesis').snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as any;
+        const id = a.payload.doc.id;
+        return { id, ...data };
+      }))
+    );
+  }
+
+  updateDocumentsStates(tesisId: string, documentos: any[]) {
+    const batch = this.firestore.firestore.batch();
+    const docsRef = this.firestore.collection(`tesis/${tesisId}/documents`);
+
+    documentos.forEach(doc => {
+      const docRef = docsRef.doc(doc.id).ref;
+      batch.update(docRef, doc);
+    });
+
+    return batch.commit();
+  }
+
 
 
 

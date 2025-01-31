@@ -171,3 +171,88 @@
 }
 
 
+
+.seguimiento {
+  text-align: center;
+  padding: 20px;
+}
+
+.buscador {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.buscador input {
+  width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #d9d9d9;
+}
+
+.buscador button {
+  background-color: #1f2937;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buscador button:hover {
+  background-color: #374151;
+}
+
+.tabla-container {
+  margin: auto;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table th, table td {
+  border: 1.5px solid #000;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #fff;
+}
+
+.completado {
+  color: green;
+}
+
+.faltante {
+  color: red;
+}
+
+.descargar-btn {
+  background-color: rgba(4, 65, 112, 1);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.descargar-btn:hover {
+  background-color: #374151;
+}
+
+.a{
+  text-decoration: underline;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+
+

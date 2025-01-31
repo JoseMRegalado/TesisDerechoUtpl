@@ -66,6 +66,7 @@ header .navbar a:hover{
 
 .logout button{
   background-color: #e2e2e2;
+  cursor: pointer;
 }
 
 

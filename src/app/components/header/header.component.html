@@ -14,8 +14,8 @@
   <nav class="navbar">
     <a [routerLink]="['/home']">Inicio</a>
     <a [routerLink]="['/info']">Objetivo</a>
-    <a href="https://www.utpl.edu.ec/" target="_blank">Carrera Derecho</a>
-    <a href="https://www.utpl.edu.ec/carreras/derecho" target="_blank">UTPL</a>
+    <a href="https://www.utpl.edu.ec/carreras/derecho"  target="_blank">Carrera Derecho</a>
+    <a href="https://www.utpl.edu.ec/" target="_blank">UTPL</a>
   </nav>
 
   <div *ngIf="loggedIn; else loginButton" class="acceso">
@@ -24,7 +24,7 @@
       <p>{{ user?.role }}</p>
     </div>
     <div class="logout">
-      <button (click)="logout()"><img src="assets/img/Vector%20(4).svg"></button>
+      <button (click)="logout()" [routerLink]="['']" ><img src="assets/img/Vector%20(4).svg"></button>
     </div>
   </div>
 

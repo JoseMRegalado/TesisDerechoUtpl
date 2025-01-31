@@ -12,34 +12,35 @@
       <div class="grid">
         <div>
           <label for="practicum1">Practicum 1</label>
-          <select id="practicum1" [(ngModel)]="materias.practicum1">
+          <select id="practicum1" [(ngModel)]="materias.practicum1" [disabled]="isReadOnly">
             <option value="Aprobado">Aprobado</option>
             <option value="Reprobado">Reprobado</option>
           </select>
         </div>
         <div>
           <label for="practicum2">Practicum 2</label>
-          <select id="practicum2" [(ngModel)]="materias.practicum2">
+          <select id="practicum2" [(ngModel)]="materias.practicum2" [disabled]="isReadOnly">
             <option value="Aprobado">Aprobado</option>
             <option value="Reprobado">Reprobado</option>
           </select>
         </div>
         <div>
           <label for="gestion1">Gestión Productiva 1</label>
-          <select id="gestion1" [(ngModel)]="materias.gestion1">
+          <select id="gestion1" [(ngModel)]="materias.gestion1" [disabled]="isReadOnly">
             <option value="Aprobado">Aprobado</option>
             <option value="Reprobado">Reprobado</option>
           </select>
         </div>
         <div>
           <label for="gestion2">Gestión Productiva 2</label>
-          <select id="gestion2" [(ngModel)]="materias.gestion2">
+          <select id="gestion2" [(ngModel)]="materias.gestion2" [disabled]="isReadOnly">
             <option value="Aprobado">Aprobado</option>
             <option value="Reprobado">Reprobado</option>
           </select>
         </div>
       </div>
-      <button (click)="guardarMaterias()">Enviar</button>
+      <button *ngIf="!isReadOnly" (click)="guardarMaterias()">Enviar</button>
+      <button *ngIf="isReadOnly">{{ estadoMaterias || 'Pendiente' }}</button>
     </div>
 
     <!-- Bimestre Section -->
@@ -48,14 +49,15 @@
       <div class="grid">
         <div>
           <label for="primerBimestre">Primer Bimestre</label>
-          <input id="primerBimestre" type="number" [(ngModel)]="bimestres.primerBimestre" min="1" max="10">
+          <input id="primerBimestre" type="number" [(ngModel)]="bimestres.primerBimestre" min="1" max="10" [disabled]="isReadOnly">
         </div>
         <div>
           <label for="segundoBimestre">Segundo Bimestre</label>
-          <input id="segundoBimestre" type="number" [(ngModel)]="bimestres.segundoBimestre" min="1" max="10">
+          <input id="segundoBimestre" type="number" [(ngModel)]="bimestres.segundoBimestre" min="1" max="10" [disabled]="isReadOnly">
         </div>
       </div>
-      <button (click)="guardarBimestres()">Enviar</button>
+      <button *ngIf="!isReadOnly" (click)="guardarBimestres()">Enviar</button>
+      <button *ngIf="isReadOnly">{{ estadoBimestre || 'Pendiente' }}</button>
     </div>
   </div>
 
@@ -66,14 +68,15 @@
       <div class="grid">
         <div>
           <label for="primerAvance">Primer Avance</label>
-          <input id="primerAvance" type="date" [(ngModel)]="fechas.primerAvance">
+          <input id="primerAvance" type="date" [(ngModel)]="fechas.primerAvance" [disabled]="isReadOnly">
         </div>
         <div>
           <label for="segundoAvance">Segundo Avance</label>
-          <input id="segundoAvance" type="date" [(ngModel)]="fechas.segundoAvance">
+          <input id="segundoAvance" type="date" [(ngModel)]="fechas.segundoAvance" [disabled]="isReadOnly">
         </div>
       </div>
-      <button (click)="guardarFechas()">Enviar</button>
+      <button *ngIf="!isReadOnly" (click)="guardarFechas()">Enviar</button>
+      <button *ngIf="isReadOnly">{{ estadoFechas || 'Pendiente' }}</button>
     </div>
 
     <!-- Aprobación Sections -->
@@ -82,10 +85,11 @@
       <div class="grid">
         <div>
           <label for="aprobacion1">Abril - Agosto</label>
-          <input id="aprobacion1" type="date" [(ngModel)]="fechas.aprobacion1">
+          <input id="aprobacion1" type="date" [(ngModel)]="fechas.aprobacion1" [disabled]="isReadOnly">
         </div>
       </div>
-      <button (click)="guardarAprobaciones()">Enviar</button>
+      <button *ngIf="!isReadOnly" (click)="guardarAprobaciones()">Enviar</button>
+      <button *ngIf="isReadOnly">{{ estadoAprobacion1 || 'Pendiente' }}</button>
     </div>
 
     <!-- Aprobación Sections -->
@@ -94,10 +98,11 @@
       <div class="grid">
         <div>
           <label for="aprobacion2">Octubre - Febrero</label>
-          <input id="aprobacion2" type="date" [(ngModel)]="fechas.aprobacion2">
+          <input id="aprobacion2" type="date" [(ngModel)]="fechas.aprobacion2" [disabled]="isReadOnly">
         </div>
       </div>
-      <button (click)="guardarAprobaciones2()">Enviar</button>
+      <button *ngIf="!isReadOnly" (click)="guardarAprobaciones2()">Enviar</button>
+      <button *ngIf="isReadOnly">{{ estadoAprobacion2 || 'Pendiente' }}</button>
     </div>
   </div>
 

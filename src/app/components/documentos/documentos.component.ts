@@ -16,11 +16,13 @@ export class DocumentosComponent implements OnInit {
   newDocument: any = {
     descripcion: '',
     fechaIngreso: null,
-    file: null
+    file: null,
+    fechaValidacionActual: null,
   };
   addingDocument = false;
   currentUserId: string = '';
   tesisId: string | null = null;
+  role: string = '';
 
   constructor(private consultasService: ConsultasService, private loginService: LoginService,
               private route: ActivatedRoute) {}
@@ -42,6 +44,7 @@ export class DocumentosComponent implements OnInit {
     this.loginService.getCurrentUser().subscribe(user => {
       if (user) {
         this.currentUserId = user.id;
+        this.role = user.role;
         if (this.tesisId) {  // Verificación para evitar el uso de null
           this.loadDocuments();
           this.loadPersonalData();
@@ -50,15 +53,32 @@ export class DocumentosComponent implements OnInit {
     });
   }
 
+  getStatusClass(status: string): string {
+    if (status === 'Aprobado') {
+      return 'status-approve';
+    } else if (status === 'Rechazado') {
+      return 'status-reject';
+    } else {
+      return 'status-wait';
+    }
+  }
+
+
 
   // Cargar documentos desde la subcolección 'documents' de la tesis
   loadDocuments() {
-    if (this.tesisId) {  // Asegúrate de que tesisId no sea null
+    if (this.tesisId) {
       this.consultasService.getDocumentsByTesisId(this.tesisId).subscribe((docs) => {
-        this.documents = docs;
+        this.documents = docs.map(doc => ({
+          ...doc,
+          estadoActual: doc[this.role] || 'En espera', // Estado actual según el rol
+          observacionesActual: doc.observaciones || '', // Observaciones
+          fechaValidacionActual: this.role === 'director' ? doc.fechaValidacion || null : doc.fechaValidacion, // Fecha para director
+        }));
       });
     }
   }
+
 
 
   addDocument() {
@@ -171,5 +191,37 @@ export class DocumentosComponent implements OnInit {
     // Abrir el PDF en una nueva pestaña
     window.open(doc.output('bloburl'));
   }
+
+  updateDocumentStates() {
+    const documentosActualizados = this.documents.map(doc => ({
+      id: doc.id,
+      [`${this.role}`]: doc.estadoActual, // Guardar estado según el rol
+      observaciones: this.role === 'docente' ? doc.observacionesActual : doc.observaciones,
+      fechaValidacion: this.role === 'director' ? doc.fechaValidacionActual : doc.fechaValidacion,
+    }));
+
+    // Verificar si hay documentos sin estado seleccionado
+    if (documentosActualizados.some(doc => !doc[this.role])) {
+      alert("Todos los documentos deben tener un estado.");
+      return;
+    }
+
+    // Si es director, validar que todas las fechas de validación estén seleccionadas
+    if (this.role === 'director' && documentosActualizados.some(doc => !doc.fechaValidacion)) {
+      alert("Debe seleccionar una fecha de validación para todos los documentos.");
+      return;
+    }
+
+    this.consultasService.updateDocumentsStates(this.tesisId!, documentosActualizados)
+      .then(() => {
+        alert("Estados actualizados correctamente.");
+        this.loadDocuments(); // Recargar documentos
+      })
+      .catch(error => {
+        console.error('Error al actualizar estados:', error);
+      });
+  }
+
+
 
 }

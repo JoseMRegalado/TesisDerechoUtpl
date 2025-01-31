@@ -33,6 +33,28 @@ export class LoginService {
     );
   }
 
+  getCurrentUserRole(): Observable<string> {
+    return this.afAuth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.firestore.collection('users').doc(user.uid).valueChanges();
+        } else {
+          return of(null);
+        }
+      }),
+      switchMap((userData: any) => {
+        return of(userData?.role || 'estudiante'); // Si no tiene rol, se asume estudiante
+      })
+    );
+  }
+
+  getUserId(): Observable<string | null> {
+    return this.afAuth.authState.pipe(
+      map(user => user ? user.uid : null)
+    );
+  }
+
+
   login(email: string, password: string): Observable<any> {
     return from(this.afAuth.signInWithEmailAndPassword(email, password));
   }

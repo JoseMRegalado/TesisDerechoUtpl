@@ -35,6 +35,8 @@ export class PersonalDataComponent {
   hasScholarship: boolean = false;
   scholarshipPercentage: number | null = null;
 
+  userRole: string | null = null;
+
 
   tesisId: string | null = null;
 
@@ -48,6 +50,14 @@ export class PersonalDataComponent {
     this.route.queryParams.subscribe(params => {
       this.tesisId = params['tesisId'];
       console.log('Tesis ID:', this.tesisId);
+    });
+    this.loginService.getCurrentUser().subscribe(user => {
+      if (user) {
+        this.userRole = user.role;
+
+      } else {
+        console.error('No se encontró el usuario autenticado.');
+      }
     });
   }
 
