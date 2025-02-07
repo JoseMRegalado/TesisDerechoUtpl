@@ -110,6 +110,9 @@ export class FlujoComponent implements OnInit {
       return;
     }
 
+    // Asignar la fecha actual del sistema
+    this.form.fechaRegistro = new Date().toISOString();
+
     const filePath = `flujo/${this.usuarioLoggeado.firstName}_${this.usuarioLoggeado.lastName}/${this.documento.name}`;
     const fileRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, this.documento);
