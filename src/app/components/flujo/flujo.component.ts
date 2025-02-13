@@ -17,6 +17,9 @@ export class FlujoComponent implements OnInit {
   usuarioLoggeado: User | null = null;  // Información del usuario loggeado
   form: any = {};  // Formulario para agregar evidencias
   documento: File | null = null;  // Archivo seleccionado para subir
+  mostrarDialogoReunion: boolean = false;  // Controla el modal de reuniones
+  reunionForm: any = {};  // Formulario para la reunión
+  reuniones: any[] = []; // ← Agregar esta línea
 
 
   tesisId: string | null = null;
@@ -39,6 +42,7 @@ export class FlujoComponent implements OnInit {
           if (user) {
             this.usuarioLoggeado = user;  // Almacena los datos del usuario loggeado
             this.cargarEvidencias();  // Cargar evidencias relacionadas al usuario
+            this.cargarReuniones();
           } else {
             console.log("No hay usuario loggeado.");
           }
@@ -143,6 +147,80 @@ export class FlujoComponent implements OnInit {
       });
     }).catch(error => console.error('❌ Error al subir archivo:', error));
   }
+
+
+  openReunionDialog() {
+    this.mostrarDialogoReunion = true;
+  }
+
+  cerrarReunionDialog() {
+    this.mostrarDialogoReunion = false;
+    this.reunionForm = {};
+  }
+
+  cargarReuniones() {
+    if (this.tesisId) {
+      this.firestore.collection('tesis').doc(this.tesisId).collection('reuniones')
+        .valueChanges({ idField: 'id' }) // Agregar el ID de Firestore
+        .subscribe((data: any[]) => {
+          this.reuniones = data;
+        }, error => {
+          console.error('❌ Error al cargar reuniones:', error);
+        });
+    }
+  }
+
+  actualizarAsistencia(reunion: any) {
+    if (this.usuarioLoggeado?.firstName + ' ' + this.usuarioLoggeado?.lastName !== reunion.autor) {
+      console.warn('❌ No tienes permiso para actualizar esta asistencia.');
+      return;
+    }
+
+    this.firestore.collection('tesis').doc(this.tesisId!)
+      .collection('reuniones').doc(reunion.id)
+      .update({ asistencia: reunion.asistencia })
+      .then(() => console.log('✅ Asistencia actualizada'))
+      .catch(error => console.error('❌ Error al actualizar asistencia:', error));
+  }
+
+
+  submitReunion() {
+    if (!this.tesisId) {
+      console.error('❌ No hay ID de tesis disponible.');
+      return;
+    }
+    if (!this.usuarioLoggeado) {
+      console.error('❌ No hay usuario loggeado.');
+      return;
+    }
+    if (!this.reunionForm.descripcion) {
+      console.error('❌ La descripción de la reunión es obligatoria.');
+      return;
+    }
+
+    const nuevaReunion = {
+      periodo: 'Oct/2023 - Feb/2024', // Puedes cambiar esto según el período actual
+      fechaReunion: new Date().toISOString(
+
+      ), // Fecha actual del sistema
+      descripcion: this.reunionForm.descripcion,
+      asistencia: 'Pendiente', // Valor por defecto
+      autor: `${this.usuarioLoggeado.firstName} ${this.usuarioLoggeado.lastName}`
+    };
+
+    console.log('📌 Datos a guardar en Firestore:', nuevaReunion);
+
+    this.firestore.collection('tesis').doc(this.tesisId!)
+      .collection('reuniones')
+      .add(nuevaReunion)
+      .then(() => {
+        console.log('✅ Reunión guardada con éxito');
+        this.cerrarReunionDialog(); // Cerrar el modal
+        this.cargarReuniones(); // Volver a cargar la lista
+      })
+      .catch(error => console.error('❌ Error al guardar la reunión:', error));
+  }
+
 
 
 }

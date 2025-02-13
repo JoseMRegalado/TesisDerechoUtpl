@@ -8,6 +8,9 @@
   <h2>Flujo de Tesis Directo - Estudiante</h2>
 
   <!-- Botón para agregar nueva evidencia -->
+  <button *ngIf="usuarioLoggeado?.role === 'docente' || usuarioLoggeado?.role === 'estudiante'"
+          (click)="openReunionDialog()">Reunión +</button>
+
   <button (click)="openAddDialog()">Agregar +</button>
 
   <!-- Tabla para mostrar las evidencias -->
@@ -100,6 +103,63 @@
       </form>
     </div>
   </div>
+
+  <!-- Modal de reuniones -->
+  <div *ngIf="mostrarDialogoReunion" class="modal">
+    <div class="modal-content">
+      <h2>Agregar nueva reunión</h2>
+
+      <div>
+        <label><b>Autor:</b></label>
+        <span>{{ usuarioLoggeado?.firstName }} {{ usuarioLoggeado?.lastName }}</span>
+      </div>
+      <div>
+        <label><b>Periodo:</b></label>
+        <span>Oct/2023 - Feb/2024</span>
+      </div>
+
+      <form (ngSubmit)="submitReunion()">
+        <div class="form-group">
+          <label>Descripción</label>
+          <input type="text" [(ngModel)]="reunionForm.descripcion" name="descripcion" placeholder="Escribe aquí..." required>
+        </div>
+
+        <div class="modal-buttons">
+          <button type="button" class="cancel-btn" (click)="cerrarReunionDialog()">Cancelar</button>
+          <button type="submit" class="submit-btn">Crear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tabla de reuniones -->
+  <table>
+    <thead>
+    <tr>
+      <th>Periodo</th>
+      <th>Fecha de reunión</th>
+      <th>Descripción</th>
+      <th>Asistencia</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let reunion of reuniones">
+      <td>{{ reunion.periodo }}</td>
+      <td>{{ reunion.fechaReunion | date }}</td>
+      <td>{{ reunion.descripcion }}</td>
+      <td>
+        <select [(ngModel)]="reunion.asistencia"
+                (change)="actualizarAsistencia(reunion)"
+                [disabled]="usuarioLoggeado?.firstName + ' ' + usuarioLoggeado?.lastName !== reunion.autor">
+          <option value="Pendiente">Pendiente</option>
+          <option value="Asistió">Asistió</option>
+          <option value="No asistió">No asistió</option>
+        </select>
+      </td>
+
+    </tr>
+    </tbody>
+  </table>
 
 </div>
 <app-footer2></app-footer2>
