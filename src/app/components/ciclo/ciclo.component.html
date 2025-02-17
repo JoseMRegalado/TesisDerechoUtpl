@@ -40,7 +40,7 @@
         </div>
       </div>
       <button *ngIf="!isReadOnly" (click)="guardarMaterias()">Enviar</button>
-      <button *ngIf="isReadOnly">{{ estadoMaterias || 'Pendiente' }}</button>
+      <button class="a" *ngIf="isReadOnly">{{ estadoMaterias || 'Pendiente' }}</button>
     </div>
 
     <!-- Bimestre Section -->
@@ -57,7 +57,7 @@
         </div>
       </div>
       <button *ngIf="!isReadOnly" (click)="guardarBimestres()">Enviar</button>
-      <button *ngIf="isReadOnly">{{ estadoBimestre || 'Pendiente' }}</button>
+      <button class="a" *ngIf="isReadOnly">{{ estadoBimestre || 'Pendiente' }}</button>
     </div>
   </div>
 
@@ -76,7 +76,7 @@
         </div>
       </div>
       <button *ngIf="!isReadOnly" (click)="guardarFechas()">Enviar</button>
-      <button *ngIf="isReadOnly">{{ estadoFechas || 'Pendiente' }}</button>
+      <button class="a" *ngIf="isReadOnly">{{ estadoFechas || 'Pendiente' }}</button>
     </div>
 
     <!-- Aprobación Sections -->
@@ -89,7 +89,7 @@
         </div>
       </div>
       <button *ngIf="!isReadOnly" (click)="guardarAprobaciones()">Enviar</button>
-      <button *ngIf="isReadOnly">{{ estadoAprobacion1 || 'Pendiente' }}</button>
+      <button class="a" *ngIf="isReadOnly">{{ estadoAprobacion1 || 'Pendiente' }}</button>
     </div>
 
     <!-- Aprobación Sections -->
@@ -102,7 +102,7 @@
         </div>
       </div>
       <button *ngIf="!isReadOnly" (click)="guardarAprobaciones2()">Enviar</button>
-      <button *ngIf="isReadOnly">{{ estadoAprobacion2 || 'Pendiente' }}</button>
+      <button class="a" *ngIf="isReadOnly">{{ estadoAprobacion2 || 'Pendiente' }}</button>
     </div>
   </div>
 

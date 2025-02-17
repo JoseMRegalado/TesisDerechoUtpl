@@ -111,3 +111,15 @@ button.validado {
   }
 }
 
+.a {
+  background-color: #888;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: not-allowed;
+  display: block;
+  margin: 20px auto 0;
+}
+

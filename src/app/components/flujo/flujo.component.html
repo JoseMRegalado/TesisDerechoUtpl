@@ -118,7 +118,18 @@
         <span>Oct/2023 - Feb/2024</span>
       </div>
 
+      <!-- Mostrar fecha de registro (actual del sistema) -->
+      <div>
+        <label><b>Fecha de registro:</b></label>
+        <span>{{ fechaRegistroReunion | date }}</span>
+      </div>
+
       <form (ngSubmit)="submitReunion()">
+        <div class="form-group">
+          <label>Fecha de reunión (programada)</label>
+          <input type="date" [(ngModel)]="reunionForm.fechaReunion" name="fechaReunion" required>
+        </div>
+
         <div class="form-group">
           <label>Descripción</label>
           <input type="text" [(ngModel)]="reunionForm.descripcion" name="descripcion" placeholder="Escribe aquí..." required>
@@ -132,11 +143,13 @@
     </div>
   </div>
 
+
   <!-- Tabla de reuniones -->
   <table>
     <thead>
     <tr>
       <th>Periodo</th>
+      <th>Fecha de registro</th>
       <th>Fecha de reunión</th>
       <th>Descripción</th>
       <th>Asistencia</th>
@@ -145,6 +158,7 @@
     <tbody>
     <tr *ngFor="let reunion of reuniones">
       <td>{{ reunion.periodo }}</td>
+      <td>{{ reunion.fechaRegistro | date }}</td>
       <td>{{ reunion.fechaReunion | date }}</td>
       <td>{{ reunion.descripcion }}</td>
       <td>
@@ -156,10 +170,10 @@
           <option value="No asistió">No asistió</option>
         </select>
       </td>
-
     </tr>
     </tbody>
   </table>
+
 
 </div>
 <app-footer2></app-footer2>

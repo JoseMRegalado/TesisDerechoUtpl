@@ -20,6 +20,8 @@ export class FlujoComponent implements OnInit {
   mostrarDialogoReunion: boolean = false;  // Controla el modal de reuniones
   reunionForm: any = {};  // Formulario para la reunión
   reuniones: any[] = []; // ← Agregar esta línea
+  fechaRegistroReunion: string | null = null;
+
 
 
   tesisId: string | null = null;
@@ -149,7 +151,9 @@ export class FlujoComponent implements OnInit {
   }
 
 
+  // Abrir el modal de reuniones y asignar la fecha de registro actual
   openReunionDialog() {
+    this.fechaRegistroReunion = new Date().toISOString();
     this.mostrarDialogoReunion = true;
   }
 
@@ -184,6 +188,7 @@ export class FlujoComponent implements OnInit {
   }
 
 
+  // Método para enviar el formulario de reunión
   submitReunion() {
     if (!this.tesisId) {
       console.error('❌ No hay ID de tesis disponible.');
@@ -193,16 +198,15 @@ export class FlujoComponent implements OnInit {
       console.error('❌ No hay usuario loggeado.');
       return;
     }
-    if (!this.reunionForm.descripcion) {
-      console.error('❌ La descripción de la reunión es obligatoria.');
+    if (!this.reunionForm.descripcion || !this.reunionForm.fechaReunion) {
+      console.error('❌ Todos los campos son obligatorios.');
       return;
     }
 
     const nuevaReunion = {
       periodo: 'Oct/2023 - Feb/2024', // Puedes cambiar esto según el período actual
-      fechaReunion: new Date().toISOString(
-
-      ), // Fecha actual del sistema
+      fechaRegistro: this.fechaRegistroReunion, // Fecha actual del sistema
+      fechaReunion: this.reunionForm.fechaReunion, // Fecha seleccionada en el input
       descripcion: this.reunionForm.descripcion,
       asistencia: 'Pendiente', // Valor por defecto
       autor: `${this.usuarioLoggeado.firstName} ${this.usuarioLoggeado.lastName}`
