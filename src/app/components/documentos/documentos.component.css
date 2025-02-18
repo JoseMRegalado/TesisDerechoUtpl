@@ -6,7 +6,6 @@ h2 {
 }
 
 table {
-  width: 80%;
   border-collapse: collapse;
   margin: 20px auto;
   background-color: white;
@@ -20,7 +19,7 @@ thead {
 
 th, td {
   text-align: left;
-  padding: 12px;
+  padding: 15px;
   border-bottom: 1px solid #ddd;
   font-size: 14px;
 }
@@ -51,7 +50,7 @@ button {
   margin: 10px 5px;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 16px;
   text-align: center;
 }
 
@@ -64,24 +63,24 @@ td:nth-child(6), td:nth-child(7), td:nth-child(8) {
 }
 
 .status-approve {
-  background-color: #7ef078;
-  color: #000;
-  padding: 6px 12px;
-  border-radius: 5px;
+  background-color: #92FF9F;
+  color: #044170;
+  padding: 13px 13px;
+  border-radius: 12px;
 }
 
 .status-wait {
   background-color: #aeb6bf;
-  color: #000;
-  padding: 6px 12px;
-  border-radius: 5px;
+  color: #044170;
+  padding: 13.5px 13.5px;
+  border-radius: 12px;
 }
 
 .status-reject {
-  background-color: #f06565;
-  color: #000;
-  padding: 6px 12px;
-  border-radius: 5px;
+  background-color: #FF9898;
+  color: #044170;
+  padding: 12px 12px;
+  border-radius: 12px;
 }
 
 
