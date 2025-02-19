@@ -43,14 +43,14 @@ a:hover {
 }
 
 button {
-  background-color: #003366;
+  background-color: #044170;
   color: white;
   border: none;
   padding: 10px 20px;
   margin: 10px 5px;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 16px;
+  border-radius: 20px;
   text-align: center;
 }
 
@@ -68,12 +68,20 @@ td:nth-child(6), td:nth-child(7), td:nth-child(8) {
   padding: 13px 13px;
   border-radius: 12px;
 }
+.status-approve option{
+  background-color: white;
+}
+
 
 .status-wait {
   background-color: #aeb6bf;
   color: #044170;
   padding: 13.5px 13.5px;
   border-radius: 12px;
+}
+
+.status-wait option{
+  background-color: white;
 }
 
 .status-reject {
@@ -83,6 +91,9 @@ td:nth-child(6), td:nth-child(7), td:nth-child(8) {
   border-radius: 12px;
 }
 
+.status-reject option{
+  background: white;
+}
 
 tfoot button {
   background-color: #003366;

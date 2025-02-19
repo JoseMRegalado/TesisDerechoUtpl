@@ -11,6 +11,8 @@ import User from '../../interfaces/user.interface';
 export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
   user: User | null = null;
+  menuOpen: boolean = false; // Control del menú en móviles
+  botonOpen: boolean = false; // Control del dropdown de usuario
 
   constructor(private loginService: LoginService, private router: Router) {}
 
@@ -28,5 +30,13 @@ export class HeaderComponent implements OnInit {
     this.loginService.logout().subscribe(() => {
       this.router.navigate(['']);
     });
+  }
+
+  toggleMenu(): void {
+    this.botonOpen = !this.botonOpen;
+  }
+
+  toggleNav(): void {
+    this.menuOpen = !this.menuOpen;
   }
 }

@@ -144,12 +144,11 @@ input[type="file"] {
 }
 .guardar button{
   display: inline-block;
-  border-radius: 0.5rem;
+  border-radius: 20px;
   color: #fff;
-  background-color: rgba(4, 65, 112, 1);
-
+  background-color: #004271;
   cursor: pointer;
-  font-size: 11.14px;
+  font-size: 14px;
   width: 100px;
   text-align: center;
 
