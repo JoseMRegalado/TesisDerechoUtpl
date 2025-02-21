@@ -16,6 +16,11 @@
       <option value="cedula">Cédula</option>
     </select>
     </div>
+    <!-- Número de identidad -->
+    <div class="campo">
+      <label for="identificacion" class="required-label">Identificación</label>
+      <input type="text" id="identificacion" [(ngModel)]="identificacion" required />
+    </div>
     <!-- Foto Documento de Identidad -->
     <div class="file-upload-container">
       <label for="idDocPhoto" class="required-label">Adjuntar</label>
@@ -48,13 +53,13 @@
       <!-- Nombres -->
       <div class="campo">
         <label for="firstName" class="required-label">Nombres</label>
-        <input  placeholder="Text" type="text" id="firstName" [(ngModel)]="firstName" required />
+        <input type="text" id="firstName" [(ngModel)]="firstName" required />
       </div>
 
       <!-- Apellidos -->
       <div class="campo">
         <label for="lastName" class="required-label">Apellidos</label>
-        <input placeholder="Text" type="text" id="lastName" [(ngModel)]="lastName" required />
+        <input type="text" id="lastName" [(ngModel)]="lastName" required />
       </div>
 
       <!-- Sexo -->
@@ -70,7 +75,7 @@
       <div class="campo">
         <!-- Nacionalidad -->
         <label for="nationality" class="required-label">Nacionalidad</label>
-        <input placeholder="Text" type="text" id="nationality" [(ngModel)]="nationality" required />
+        <input type="text" id="nationality" [(ngModel)]="nationality" required />
       </div>
 
       <div class="campo">
@@ -90,31 +95,31 @@
       <!-- Domicilio -->
       <div class="campo">
         <label for="address" class="required-label">Domicilio</label>
-        <input placeholder="Text" type="text" id="address" [(ngModel)]="address" required />
+        <input type="text" id="address" [(ngModel)]="address" required />
       </div>
 
       <div class="campo">
         <!-- Localidad -->
         <label for="city" class="required-label">Localidad</label>
-        <input placeholder="Text" type="text" id="city" [(ngModel)]="city" required />
+        <input type="text" id="city" [(ngModel)]="city" required />
       </div>
 
       <div class="campo">
         <!-- Email UTPL -->
         <label for="utplEmail" class="required-label">Email UTPL</label>
-        <input placeholder="Text" type="email" id="utplEmail" [(ngModel)]="utplEmail" required />
+        <input type="email" id="utplEmail" [(ngModel)]="utplEmail" required />
       </div>
 
       <div class="campo">
         <!-- Email personal -->
         <label for="personalEmail" class="required-label">Email personal</label>
-        <input placeholder="Text" type="email" id="personalEmail" [(ngModel)]="personalEmail" required />
+        <input type="email" id="personalEmail" [(ngModel)]="personalEmail" required />
       </div>
 
       <div class="campo">
         <!-- Código Postal -->
         <label for="postalCode" class="required-label">Código Postal</label>
-        <input placeholder="Numb" type="number" id="postalCode" [(ngModel)]="postalCode" required />
+        <input type="number" id="postalCode" [(ngModel)]="postalCode" required />
       </div>
     </div>
 
@@ -130,19 +135,19 @@
       <div class="campo">
         <!-- Provincia -->
         <label for="province" class="required-label">Provincia</label>
-        <input placeholder="Text" type="text" id="province" [(ngModel)]="province" required />
+        <input type="text" id="province" [(ngModel)]="province" required />
       </div>
 
       <div class="campo">
         <!-- Teléfono Fijo -->
         <label for="landline" class="required-label">Teléfono fijo</label>
-        <input placeholder="Numb" type="tel" id="landline" [(ngModel)]="landline" required />
+        <input type="tel" id="landline" [(ngModel)]="landline" required />
       </div>
 
       <div class="campo">
         <!-- Teléfono Celular -->
         <label for="mobile" class="required-label">Teléfono celular</label>
-        <input placeholder="Numb" type="tel" id="mobile" [(ngModel)]="mobile" required />
+        <input type="tel" id="mobile" [(ngModel)]="mobile" required />
       </div>
     </div>
 
@@ -158,13 +163,13 @@
     <div *ngIf="hasDisability" class="campos">
       <div class="campo">
         <label for="disabilityPercentage" class="opcional">Grado de Discapacidad</label>
-        <input placeholder="Numb" type="number" id="disabilityPercentage" [(ngModel)]="disabilityPercentage" />
+        <input type="number" id="disabilityPercentage" [(ngModel)]="disabilityPercentage" />
 
       </div>
 
       <div class="campo">
         <label for="disabilityType" class="opcional">Tipo de Discapacidad</label>
-        <input placeholder="Text" type="text" id="disabilityType" [(ngModel)]="disabilityType" />
+        <input type="text" id="disabilityType" [(ngModel)]="disabilityType" />
       </div>
 
       <div class="campo">
@@ -203,7 +208,7 @@
       <!-- Campos de Beca -->
       <div *ngIf="hasScholarship">
         <label for="scholarshipPercentage" class="opcional">Porcentaje de Beca</label>
-        <input placeholder="Numb" type="number" id="scholarshipPercentage" [(ngModel)]="scholarshipPercentage" />
+        <input type="number" id="scholarshipPercentage" [(ngModel)]="scholarshipPercentage" />
       </div>
 
     </div>
@@ -264,13 +269,13 @@
       <!-- Nombres -->
       <div class="campo">
         <label for="firstName" class="required-label">Nombres</label>
-        <input  placeholder="Text" type="text" id="firstName" [(ngModel)]="firstName" required readonly/>
+        <input  type="text" id="firstName" [(ngModel)]="firstName" required readonly/>
       </div>
 
       <!-- Apellidos -->
       <div class="campo">
         <label for="lastName" class="required-label">Apellidos</label>
-        <input placeholder="Text" type="text" id="lastName" [(ngModel)]="lastName" required readonly/>
+        <input type="text" id="lastName" [(ngModel)]="lastName" required readonly/>
       </div>
 
       <!-- Sexo -->
@@ -286,7 +291,7 @@
       <div class="campo">
         <!-- Nacionalidad -->
         <label for="nationality" class="required-label">Nacionalidad</label>
-        <input placeholder="Text" type="text" id="nationality" [(ngModel)]="nationality" required readonly/>
+        <input type="text" id="nationality" [(ngModel)]="nationality" required readonly/>
       </div>
 
       <div class="campo">
@@ -306,31 +311,31 @@
       <!-- Domicilio -->
       <div class="campo">
         <label for="address" class="required-label">Domicilio</label>
-        <input placeholder="Text" type="text" id="address" [(ngModel)]="address" required readonly/>
+        <input type="text" id="address" [(ngModel)]="address" required readonly/>
       </div>
 
       <div class="campo">
         <!-- Localidad -->
         <label for="city" class="required-label">Localidad</label>
-        <input placeholder="Text" type="text" id="city" [(ngModel)]="city" required readonly/>
+        <input type="text" id="city" [(ngModel)]="city" required readonly/>
       </div>
 
       <div class="campo">
         <!-- Email UTPL -->
         <label for="utplEmail" class="required-label">Email UTPL</label>
-        <input placeholder="Text" type="email" id="utplEmail" [(ngModel)]="utplEmail" required readonly/>
+        <input type="email" id="utplEmail" [(ngModel)]="utplEmail" required readonly/>
       </div>
 
       <div class="campo">
         <!-- Email personal -->
         <label for="personalEmail" class="required-label">Email personal</label>
-        <input placeholder="Text" type="email" id="personalEmail" [(ngModel)]="personalEmail" required readonly/>
+        <input type="email" id="personalEmail" [(ngModel)]="personalEmail" required readonly/>
       </div>
 
       <div class="campo">
         <!-- Código Postal -->
         <label for="postalCode" class="required-label">Código Postal</label>
-        <input placeholder="Numb" type="number" id="postalCode" [(ngModel)]="postalCode" required readonly/>
+        <input type="number" id="postalCode" [(ngModel)]="postalCode" required readonly/>
       </div>
     </div>
 
@@ -346,19 +351,19 @@
       <div class="campo">
         <!-- Provincia -->
         <label for="province" class="required-label">Provincia</label>
-        <input placeholder="Text" type="text" id="province" [(ngModel)]="province" required readonly/>
+        <input type="text" id="province" [(ngModel)]="province" required readonly/>
       </div>
 
       <div class="campo">
         <!-- Teléfono Fijo -->
         <label for="landline" class="required-label">Teléfono fijo</label>
-        <input placeholder="Numb" type="tel" id="landline" [(ngModel)]="landline" required readonly/>
+        <input type="tel" id="landline" [(ngModel)]="landline" required readonly/>
       </div>
 
       <div class="campo">
         <!-- Teléfono Celular -->
         <label for="mobile" class="required-label">Teléfono celular</label>
-        <input placeholder="Numb" type="tel" id="mobile" [(ngModel)]="mobile" required readonly/>
+        <input type="tel" id="mobile" [(ngModel)]="mobile" required readonly/>
       </div>
     </div>
 
@@ -374,13 +379,13 @@
     <div *ngIf="hasDisability" class="campos">
       <div class="campo">
         <label for="disabilityPercentage" class="opcional">Grado de Discapacidad</label>
-        <input placeholder="Numb" type="number" id="disabilityPercentage" [(ngModel)]="disabilityPercentage" readonly/>
+        <input type="number" id="disabilityPercentage" [(ngModel)]="disabilityPercentage" readonly/>
 
       </div>
 
       <div class="campo">
         <label for="disabilityType" class="opcional">Tipo de Discapacidad</label>
-        <input placeholder="Text" type="text" id="disabilityType" [(ngModel)]="disabilityType" readonly/>
+        <input type="text" id="disabilityType" [(ngModel)]="disabilityType" readonly/>
       </div>
 
       <div class="campo">
@@ -419,7 +424,7 @@
       <!-- Campos de Beca -->
       <div *ngIf="hasScholarship">
         <label for="scholarshipPercentage" class="opcional">Porcentaje de Beca</label>
-        <input placeholder="Numb" type="number" id="scholarshipPercentage" [(ngModel)]="scholarshipPercentage" readonly/>
+        <input type="number" id="scholarshipPercentage" [(ngModel)]="scholarshipPercentage" readonly/>
       </div>
 
     </div>

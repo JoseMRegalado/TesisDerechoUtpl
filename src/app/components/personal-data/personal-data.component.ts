@@ -15,6 +15,7 @@ export class PersonalDataComponent {
   hasDisability: boolean = false;
   disabilityType: string = '';
   disabilityPercentage: number | null = null;
+  identificacion:string = '';
   firstName: string = '';
   lastName: string = '';
   gender: string = 'masculino';
@@ -112,6 +113,7 @@ export class PersonalDataComponent {
               gender: this.gender,
               nationality: this.nationality,
               address: this.address,
+              identificacion: this.identificacion,
               city: this.city,
               utplEmail: this.utplEmail,
               personalEmail: this.personalEmail,
@@ -167,6 +169,7 @@ export class PersonalDataComponent {
   isValid(): boolean {
     return (
       this.selectedDocument !== '' &&
+      this.identificacion !== '' &&
       this.firstName !== '' &&
       this.lastName !== '' &&
       this.gender !== '' &&
