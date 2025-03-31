@@ -37,6 +37,7 @@ export class PersonalDataComponent {
   scholarshipPercentage: number | null = null;
 
   userRole: string | null = null;
+  idDocPhotoURL: string | null = null;
 
 
   tesisId: string | null = null;
@@ -50,12 +51,41 @@ export class PersonalDataComponent {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.tesisId = params['tesisId'];
-      console.log('Tesis ID:', this.tesisId);
     });
+
     this.loginService.getCurrentUser().subscribe(user => {
       if (user) {
         this.userRole = user.role;
 
+        if (this.tesisId) {
+          this.consultasService.getTesisData(this.tesisId).subscribe(data => {
+            if (data) {
+              this.selectedDocument = data.selectedDocument || this.selectedDocument;
+              this.birthdate = data.birthdate || this.birthdate;
+              this.utpldate = data.utpldate || this.utpldate;
+              this.identificacion = data.identificacion || this.identificacion;
+              this.firstName = data.firstName || this.firstName;
+              this.lastName = data.lastName || this.lastName;
+              this.gender = data.gender || this.gender;
+              this.nationality = data.nationality || this.nationality;
+              this.address = data.address || this.address;
+              this.city = data.city || this.city;
+              this.utplEmail = data.utplEmail || this.utplEmail;
+              this.personalEmail = data.personalEmail || this.personalEmail;
+              this.postalCode = data.postalCode || this.postalCode;
+              this.country = data.country || this.country;
+              this.province = data.province || this.province;
+              this.landline = data.landline || this.landline;
+              this.mobile = data.mobile || this.mobile;
+              this.laborActivity = data.laborActivity || this.laborActivity;
+              this.hasDisability = data.hasDisability || false;
+              this.disabilityType = data.disabilityType || '';
+              this.disabilityPercentage = data.disabilityPercentage || null;
+              this.hasScholarship = data.hasScholarship || false;
+              this.scholarshipPercentage = data.scholarshipPercentage || null;
+            }
+          });
+        }
       } else {
         console.error('No se encontró el usuario autenticado.');
       }
@@ -72,6 +102,14 @@ export class PersonalDataComponent {
   toggleScholarshipFields() {
     if (!this.hasScholarship) {
       this.scholarshipPercentage = null; // Si no tiene beca, se resetea el valor
+    }
+  }
+
+  onIdentificacionInput(event: any) {
+    if (this.selectedDocument === 'cedula') {
+      const input = event.target as HTMLInputElement;
+      input.value = input.value.replace(/[^0-9]/g, '');
+      this.identificacion = input.value;
     }
   }
 

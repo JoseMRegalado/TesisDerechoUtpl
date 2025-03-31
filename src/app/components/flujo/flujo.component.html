@@ -9,11 +9,34 @@
 
   <!-- Botón para agregar nueva evidencia -->
   <div class="botones-flujo">
-    <button *ngIf="usuarioLoggeado?.role === 'docente' || usuarioLoggeado?.role === 'estudiante'"
+    <button *ngIf="usuarioLoggeado?.role === 'director' || usuarioLoggeado?.role === 'estudiante'"
             (click)="openReunionDialog()">Reunión +</button>
 
     <button (click)="openAddDialog()">Agregar +</button>
+
+    <!-- Botón para visualizar rúbrica cuando el porcentaje del director sea 100 -->
+    <div *ngIf="ultimoPorcentajeDirector === 100" class="rubrica-container">
+      <button (click)="visualizarRubrica()">Visualizar Rúbrica</button>
+    </div>
+
   </div>
+
+  <div class="progress-container">
+    <h3>Progreso del Estudiante</h3>
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="ultimoPorcentajeEstudiante"></div>
+    </div>
+    <p>{{ ultimoPorcentajeEstudiante }}%</p>
+  </div>
+
+  <div class="progress-container">
+    <h3>Progreso del Director</h3>
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="ultimoPorcentajeDirector"></div>
+    </div>
+    <p>{{ ultimoPorcentajeDirector }}%</p>
+  </div>
+
 
   <!-- Tabla para mostrar las evidencias -->
   <h3 class="titulo-tabla">Evidencias</h3>
@@ -66,7 +89,7 @@
         <div class="sup">
           <div class="form-group">
             <label>Fecha de registro</label>
-            <input type="date" [(ngModel)]="form.fechaRegistro" name="fechaRegistro" required disabled>
+            <input type="date" [(ngModel)]="form.fechaRegistro" name="fechaRegistro" required readonly>
           </div>
 
           <div class="form-group">
@@ -104,6 +127,14 @@
             </div>
           </div>
         </div>
+
+        <div class="form-group">
+          <label>Porcentaje de Avance:</label>
+          <input type="number" [(ngModel)]="form.porcentaje" name="porcentaje"
+                 [min]="!(usuarioLoggeado) || usuarioLoggeado.role === 'estudiante' ? (ultimoPorcentajeEstudiante + 1) : (ultimoPorcentajeDirector + 1)"
+                 max="100" step="1">
+        </div>
+
 
 
         <div class="modal-buttons">
@@ -150,6 +181,16 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <label>Adjunta evidencia (imagen o PDF) <span class="required">*</span></label>
+          <input type="file" id="fileUploadReunion" (change)="onFileSelectedReunion($event)" accept="image/*,application/pdf">
+          <label for="fileUploadReunion" class="custom-file-upload">
+            <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
+            Adjunta tu documento aquí
+          </label>
+        </div>
+
+
         <div class="modal-buttons">
           <button type="button" class="cancel-btn" (click)="cerrarReunionDialog()">Cancelar</button>
           <button type="submit" class="submit-btn">Crear</button>
@@ -168,6 +209,7 @@
       <th>Fecha de registro</th>
       <th>Fecha de reunión</th>
       <th>Descripción</th>
+      <th>Evidencia</th>
       <th>Asistencia</th>
     </tr>
     </thead>
@@ -177,6 +219,12 @@
       <td>{{ reunion.fechaRegistro | date }}</td>
       <td>{{ reunion.fechaReunion | date }}</td>
       <td>{{ reunion.descripcion }}</td>
+      <td>
+        <ng-container *ngIf="reunion.evidenciaUrl; else sinEvidencia">
+          <a [href]="reunion.evidenciaUrl" target="_blank">Ver archivo</a>
+        </ng-container>
+        <ng-template #sinEvidencia>Sin evidencia</ng-template>
+      </td>
       <td>
         <select [(ngModel)]="reunion.asistencia"
                 (change)="actualizarAsistencia(reunion)"

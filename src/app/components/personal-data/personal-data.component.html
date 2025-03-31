@@ -2,7 +2,7 @@
 <app-text></app-text>
 <app-heading></app-heading>
 <app-bar></app-bar>
-<div *ngIf="userRole === 'estudiante'" class="personal-data-container">
+<div class="personal-data-container">
   <h2>Datos Personales</h2>
 
   <div class="inicio">
@@ -10,7 +10,7 @@
     <div class="campo">
 
     <label for="document" class="required-label">Documento de Identidad</label>
-    <select id="document" [(ngModel)]="selectedDocument">
+    <select id="document" [disabled]="userRole !== 'estudiante'" [(ngModel)]="selectedDocument">
       <option value="pasaporte">Pasaporte</option>
       <option value="residencia">Residencia</option>
       <option value="cedula">Cédula</option>
@@ -19,17 +19,27 @@
     <!-- Número de identidad -->
     <div class="campo">
       <label for="identificacion" class="required-label">Identificación</label>
-      <input type="text" id="identificacion" [(ngModel)]="identificacion" required />
+      <input
+        type="text"
+        id="identificacion"
+        [disabled]="userRole !== 'estudiante'"
+        [(ngModel)]="identificacion"
+        required
+        (input)="onIdentificacionInput($event)"
+      />
     </div>
     <!-- Foto Documento de Identidad -->
     <div class="file-upload-container">
       <label for="idDocPhoto" class="required-label">Adjuntar</label>
-      <input type="file" id="idDocPhoto" (change)="onFileSelected($event, 'idDocPhoto')" />
-      <label for="fileUpload" class="custom-file-upload">
+      <input type="file" id="idDocPhoto" [disabled]="userRole !== 'estudiante'" (change)="onFileSelected($event, 'idDocPhoto')" />
+      <label  for="fileUpload" class="custom-file-upload">
         <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
         Adjunta tu documento aquí
       </label>
       <span class="file-types">Puede ser pdf, png, jpg</span>
+      <div *ngIf="idDocPhotoURL" class="uploaded-file">
+        <a [href]="idDocPhotoURL" target="_blank">Ver documento adjunto</a>
+      </div>
     </div>
 
 
@@ -39,12 +49,12 @@
   <!-- Fecha de Nacimiento -->
   <div class="campo">
   <label for="birthdate" class="required-label">Fecha de Nacimiento</label>
-  <input type="date"  id="birthdate" [(ngModel)]="birthdate" required/>
+  <input type="date"  id="birthdate" [disabled]="userRole !== 'estudiante'" [(ngModel)]="birthdate" required/>
   </div>
   <!-- Fecha de Utpl -->
     <div class="campo">
   <label for="utpldate" class="opcional">Fecha de Ingreso a la Utpl</label>
-  <input type="date" id="utpldate" [(ngModel)]="utpldate" required />
+  <input type="date" id="utpldate" [disabled]="userRole !== 'estudiante'" [(ngModel)]="utpldate" required />
     </div>
 </div>
 
@@ -53,19 +63,19 @@
       <!-- Nombres -->
       <div class="campo">
         <label for="firstName" class="required-label">Nombres</label>
-        <input type="text" id="firstName" [(ngModel)]="firstName" required />
+        <input type="text" id="firstName" [disabled]="userRole !== 'estudiante'" [(ngModel)]="firstName" required />
       </div>
 
       <!-- Apellidos -->
       <div class="campo">
         <label for="lastName" class="required-label">Apellidos</label>
-        <input type="text" id="lastName" [(ngModel)]="lastName" required />
+        <input type="text" [disabled]="userRole !== 'estudiante'" id="lastName" [(ngModel)]="lastName" required />
       </div>
 
       <!-- Sexo -->
       <div class="campo">
         <label for="gender" class="required-label">Sexo</label>
-        <select id="gender" [(ngModel)]="gender" required>
+        <select id="gender" [disabled]="userRole !== 'estudiante'" [(ngModel)]="gender" required>
           <option value="masculino">Masculino</option>
           <option value="femenino">Femenino</option>
           <option value="otro">Otro</option>
@@ -75,14 +85,14 @@
       <div class="campo">
         <!-- Nacionalidad -->
         <label for="nationality" class="required-label">Nacionalidad</label>
-        <input type="text" id="nationality" [(ngModel)]="nationality" required />
+        <input type="text" id="nationality" [disabled]="userRole !== 'estudiante'" [(ngModel)]="nationality" required />
       </div>
 
       <div class="campo">
         <!-- Foto ID UTPL -->
         <label class="required-label">Foto ID UTPL</label>
         <div class="file-upload-container">
-          <input type="file" id="fileUpload" (change)="onFileSelected($event, 'idPhoto')" />
+          <input type="file" id="fileUpload" [disabled]="userRole !== 'estudiante'" (change)="onFileSelected($event, 'idPhoto')" />
           <label for="fileUpload" class="custom-file-upload">
             <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
             Adjunta tu foto aquí (png, jpg)
@@ -95,31 +105,31 @@
       <!-- Domicilio -->
       <div class="campo">
         <label for="address" class="required-label">Domicilio</label>
-        <input type="text" id="address" [(ngModel)]="address" required />
+        <input type="text" id="address" [disabled]="userRole !== 'estudiante'" [(ngModel)]="address" required />
       </div>
 
       <div class="campo">
         <!-- Localidad -->
         <label for="city" class="required-label">Localidad</label>
-        <input type="text" id="city" [(ngModel)]="city" required />
+        <input type="text" id="city" [disabled]="userRole !== 'estudiante'" [(ngModel)]="city" required />
       </div>
 
       <div class="campo">
         <!-- Email UTPL -->
         <label for="utplEmail" class="required-label">Email UTPL</label>
-        <input type="email" id="utplEmail" [(ngModel)]="utplEmail" required />
+        <input type="email" id="utplEmail" [disabled]="userRole !== 'estudiante'" [(ngModel)]="utplEmail" required />
       </div>
 
       <div class="campo">
         <!-- Email personal -->
         <label for="personalEmail" class="required-label">Email personal</label>
-        <input type="email" id="personalEmail" [(ngModel)]="personalEmail" required />
+        <input type="email" id="personalEmail" [disabled]="userRole !== 'estudiante'" [(ngModel)]="personalEmail" required />
       </div>
 
       <div class="campo">
         <!-- Código Postal -->
         <label for="postalCode" class="required-label">Código Postal</label>
-        <input type="number" id="postalCode" [(ngModel)]="postalCode" required />
+        <input type="number" id="postalCode" [disabled]="userRole !== 'estudiante'" [(ngModel)]="postalCode" required />
       </div>
     </div>
 
@@ -127,7 +137,7 @@
       <div class="campo">
         <!-- País -->
         <label for="country" class="required-label">País</label>
-        <select id="country" [(ngModel)]="country" required>
+        <select id="country" [disabled]="userRole !== 'estudiante'" [(ngModel)]="country" required>
           <option value="ecuador">Ecuador</option>
         </select>
       </div>
@@ -135,27 +145,27 @@
       <div class="campo">
         <!-- Provincia -->
         <label for="province" class="required-label">Provincia</label>
-        <input type="text" id="province" [(ngModel)]="province" required />
+        <input type="text" id="province" [disabled]="userRole !== 'estudiante'" [(ngModel)]="province" required />
       </div>
 
       <div class="campo">
         <!-- Teléfono Fijo -->
         <label for="landline" class="required-label">Teléfono fijo</label>
-        <input type="tel" id="landline" [(ngModel)]="landline" required />
+        <input type="tel" id="landline" [disabled]="userRole !== 'estudiante'" [(ngModel)]="landline" required />
       </div>
 
       <div class="campo">
         <!-- Teléfono Celular -->
         <label for="mobile" class="required-label">Teléfono celular</label>
-        <input type="tel" id="mobile" [(ngModel)]="mobile" required />
+        <input type="tel" id="mobile" [disabled]="userRole !== 'estudiante'" [(ngModel)]="mobile" required />
       </div>
     </div>
 
     <!-- Información de Discapacidad -->
 
     <div class="discapacidad">
-      <input type="checkbox" id="disability" [(ngModel)]="hasDisability" (change)="toggleDisabilityFields()" />
-      <label for="disability" class="opcional">Capacidad Especial</label>
+      <input type="checkbox" [disabled]="userRole !== 'estudiante'" id="disability" [(ngModel)]="hasDisability" (change)="toggleDisabilityFields()" />
+      <label for="disability"  class="opcional">Capacidad Especial</label>
     </div>
 
 
@@ -163,20 +173,20 @@
     <div *ngIf="hasDisability" class="campos">
       <div class="campo">
         <label for="disabilityPercentage" class="opcional">Grado de Discapacidad</label>
-        <input type="number" id="disabilityPercentage" [(ngModel)]="disabilityPercentage" />
+        <input type="number" id="disabilityPercentage" [disabled]="userRole !== 'estudiante'" [(ngModel)]="disabilityPercentage" />
 
       </div>
 
       <div class="campo">
         <label for="disabilityType" class="opcional">Tipo de Discapacidad</label>
-        <input type="text" id="disabilityType" [(ngModel)]="disabilityType" />
+        <input type="text" id="disabilityType" [disabled]="userRole !== 'estudiante'" [(ngModel)]="disabilityType" />
       </div>
 
       <div class="campo">
         <!-- Documento Discapacidad -->
         <label class="required-label">Adjuntar documento discapacidad</label>
         <div class="file-upload-container">
-          <input type="file" id="idDiscPhoto" (change)="onFileSelected($event, 'idDiscPhoto')" />
+          <input type="file" id="idDiscPhoto" [disabled]="userRole !== 'estudiante'" (change)="onFileSelected($event, 'idDiscPhoto')" />
           <label for="idDiscPhoto" class="custom-file-upload">
             <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
             Adjunta tu foto aquí (pdf, word)
@@ -191,7 +201,7 @@
       <!-- Actividad Laboral -->
       <div class="campo">
       <label for="laborActivity" class="required-label">Actividad Laboral</label>
-      <select id="laborActivity" [(ngModel)]="laborActivity">
+      <select id="laborActivity" [(ngModel)]="laborActivity" [disabled]="userRole !== 'estudiante'">
         <option value="empleado">Empleado</option>
         <option value="estudiante">Estudiante</option>
         <option value="desempleado">Desempleado</option>
@@ -201,240 +211,25 @@
 
       <!-- Checkbox para Beca -->
       <div class="campo">
-        <label for="scholarship" class="opcional">Beca</label>
-        <input type="checkbox" id="scholarship" [(ngModel)]="hasScholarship" (change)="toggleScholarshipFields()" />
+        <label for="scholarship" class="opcional" >Beca</label>
+        <input type="checkbox" id="scholarship" [disabled]="userRole !== 'estudiante'" [(ngModel)]="hasScholarship" (change)="toggleScholarshipFields()" />
       </div>
 
       <!-- Campos de Beca -->
       <div *ngIf="hasScholarship">
         <label for="scholarshipPercentage" class="opcional">Porcentaje de Beca</label>
-        <input type="number" id="scholarshipPercentage" [(ngModel)]="scholarshipPercentage" />
+        <input type="number" id="scholarshipPercentage" [disabled]="userRole !== 'estudiante'" [(ngModel)]="scholarshipPercentage" />
       </div>
 
     </div>
 
-  <div class="guardar">
+  <div class="guardar" >
     <!-- Botón de Finalizar -->
-    <button (click)="finalize()">Guardar</button>
+    <button (click)="finalize()" [disabled]="userRole !== 'estudiante'">Guardar</button>
   </div>
 
 </div>
 </div>
 
-
-
-<div *ngIf="['secretario', 'director', 'docente'].includes(userRole || '')" class="personal-data-container">
-  <h2>Datos Personales</h2>
-
-  <div class="inicio">
-    <!-- Documento de Identidad -->
-    <div class="campo">
-
-      <label for="document" class="required-label">Documento de Identidad</label>
-      <select id="document" [(ngModel)]="selectedDocument">
-        <option value="pasaporte">Pasaporte</option>
-        <option value="residencia">Residencia</option>
-        <option value="cedula">Cédula</option>
-      </select>
-    </div>
-    <!-- Foto Documento de Identidad -->
-    <div class="file-upload-container">
-      <label for="idDocPhoto" class="required-label">Adjuntar</label>
-      <input type="file" id="idDocPhoto" (change)="onFileSelected($event, 'idDocPhoto')" readonly />
-      <label for="fileUpload" class="custom-file-upload">
-        <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
-        Adjunta tu documento aquí
-      </label>
-      <span class="file-types">Puede ser pdf, png, jpg</span>
-    </div>
-
-
-  </div>
-
-  <div class="calendario">
-    <!-- Fecha de Nacimiento -->
-    <div class="campo">
-      <label for="birthdate" class="required-label">Fecha de Nacimiento</label>
-      <input type="date"  id="birthdate" [(ngModel)]="birthdate" required readonly/>
-    </div>
-    <!-- Fecha de Utpl -->
-    <div class="campo">
-      <label for="utpldate" class="opcional">Fecha de Ingreso a la Utpl</label>
-      <input type="date" id="utpldate" [(ngModel)]="utpldate" required readonly/>
-    </div>
-  </div>
-
-  <div class="informacion-obligatoria">
-    <div class="campos">
-      <!-- Nombres -->
-      <div class="campo">
-        <label for="firstName" class="required-label">Nombres</label>
-        <input  type="text" id="firstName" [(ngModel)]="firstName" required readonly/>
-      </div>
-
-      <!-- Apellidos -->
-      <div class="campo">
-        <label for="lastName" class="required-label">Apellidos</label>
-        <input type="text" id="lastName" [(ngModel)]="lastName" required readonly/>
-      </div>
-
-      <!-- Sexo -->
-      <div class="campo">
-        <label for="gender" class="required-label">Sexo</label>
-        <select id="gender" [(ngModel)]="gender" required >
-          <option value="masculino">Masculino</option>
-          <option value="femenino">Femenino</option>
-          <option value="otro">Otro</option>
-        </select>
-      </div>
-
-      <div class="campo">
-        <!-- Nacionalidad -->
-        <label for="nationality" class="required-label">Nacionalidad</label>
-        <input type="text" id="nationality" [(ngModel)]="nationality" required readonly/>
-      </div>
-
-      <div class="campo">
-        <!-- Foto ID UTPL -->
-        <label class="required-label">Foto ID UTPL</label>
-        <div class="file-upload-container">
-          <input type="file" id="fileUpload" (change)="onFileSelected($event, 'idPhoto')" readonly/>
-          <label for="fileUpload" class="custom-file-upload">
-            <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
-            Adjunta tu foto aquí (png, jpg)
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="campos">
-      <!-- Domicilio -->
-      <div class="campo">
-        <label for="address" class="required-label">Domicilio</label>
-        <input type="text" id="address" [(ngModel)]="address" required readonly/>
-      </div>
-
-      <div class="campo">
-        <!-- Localidad -->
-        <label for="city" class="required-label">Localidad</label>
-        <input type="text" id="city" [(ngModel)]="city" required readonly/>
-      </div>
-
-      <div class="campo">
-        <!-- Email UTPL -->
-        <label for="utplEmail" class="required-label">Email UTPL</label>
-        <input type="email" id="utplEmail" [(ngModel)]="utplEmail" required readonly/>
-      </div>
-
-      <div class="campo">
-        <!-- Email personal -->
-        <label for="personalEmail" class="required-label">Email personal</label>
-        <input type="email" id="personalEmail" [(ngModel)]="personalEmail" required readonly/>
-      </div>
-
-      <div class="campo">
-        <!-- Código Postal -->
-        <label for="postalCode" class="required-label">Código Postal</label>
-        <input type="number" id="postalCode" [(ngModel)]="postalCode" required readonly/>
-      </div>
-    </div>
-
-    <div class="campos">
-      <div class="campo">
-        <!-- País -->
-        <label for="country" class="required-label">País</label>
-        <select id="country" [(ngModel)]="country" required >
-          <option value="ecuador">Ecuador</option>
-        </select>
-      </div>
-
-      <div class="campo">
-        <!-- Provincia -->
-        <label for="province" class="required-label">Provincia</label>
-        <input type="text" id="province" [(ngModel)]="province" required readonly/>
-      </div>
-
-      <div class="campo">
-        <!-- Teléfono Fijo -->
-        <label for="landline" class="required-label">Teléfono fijo</label>
-        <input type="tel" id="landline" [(ngModel)]="landline" required readonly/>
-      </div>
-
-      <div class="campo">
-        <!-- Teléfono Celular -->
-        <label for="mobile" class="required-label">Teléfono celular</label>
-        <input type="tel" id="mobile" [(ngModel)]="mobile" required readonly/>
-      </div>
-    </div>
-
-    <!-- Información de Discapacidad -->
-
-    <div class="discapacidad">
-      <input type="checkbox" id="disability" [(ngModel)]="hasDisability" (change)="toggleDisabilityFields()" readonly/>
-      <label for="disability" class="opcional">Capacidad Especial</label>
-    </div>
-
-
-    <!-- Campos de Discapacidad -->
-    <div *ngIf="hasDisability" class="campos">
-      <div class="campo">
-        <label for="disabilityPercentage" class="opcional">Grado de Discapacidad</label>
-        <input type="number" id="disabilityPercentage" [(ngModel)]="disabilityPercentage" readonly/>
-
-      </div>
-
-      <div class="campo">
-        <label for="disabilityType" class="opcional">Tipo de Discapacidad</label>
-        <input type="text" id="disabilityType" [(ngModel)]="disabilityType" readonly/>
-      </div>
-
-      <div class="campo">
-        <!-- Documento Discapacidad -->
-        <label class="required-label">Adjuntar documento discapacidad</label>
-        <div class="file-upload-container">
-          <input type="file" id="idDiscPhoto" (change)="onFileSelected($event, 'idDiscPhoto')" readonly/>
-          <label for="idDiscPhoto" class="custom-file-upload">
-            <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
-            Adjunta tu foto aquí (pdf, word)
-          </label>
-        </div>
-      </div>
-    </div>
-
-
-
-    <div class="campos">
-      <!-- Actividad Laboral -->
-      <div class="campo">
-        <label for="laborActivity" class="required-label" >Actividad Laboral</label>
-        <select id="laborActivity" [(ngModel)]="laborActivity">
-          <option value="empleado">Empleado</option>
-          <option value="estudiante">Estudiante</option>
-          <option value="desempleado">Desempleado</option>
-          <option value="otro">Otro</option>
-        </select>
-      </div>
-
-      <!-- Checkbox para Beca -->
-      <div class="campo">
-        <label for="scholarship" class="opcional">Beca</label>
-        <input type="checkbox" id="scholarship" [(ngModel)]="hasScholarship" (change)="toggleScholarshipFields()" readonly/>
-      </div>
-
-      <!-- Campos de Beca -->
-      <div *ngIf="hasScholarship">
-        <label for="scholarshipPercentage" class="opcional">Porcentaje de Beca</label>
-        <input type="number" id="scholarshipPercentage" [(ngModel)]="scholarshipPercentage" readonly/>
-      </div>
-
-    </div>
-
-    <div class="guardarA">
-      <!-- Botón de Finalizar -->
-      <button (click)="finalize()">Guardar</button>
-    </div>
-
-  </div>
-</div>
 
 <app-footer2></app-footer2>

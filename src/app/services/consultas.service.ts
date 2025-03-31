@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {AngularFirestore, DocumentData} from '@angular/fire/compat/firestore';
+import {AngularFirestore, AngularFirestoreCollection, DocumentData} from '@angular/fire/compat/firestore';
 import {Observable, combineLatest, of, finalize} from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import Class from '../interfaces/classes.interface';
@@ -12,8 +12,10 @@ import DocumentReference = firebase.firestore.DocumentReference;
   providedIn: 'root'
 })
 export class ConsultasService {
-
-  constructor(private firestore: AngularFirestore, private storage: AngularFireStorage) {}
+  private usersCollection: AngularFirestoreCollection<User>;
+  constructor(private firestore: AngularFirestore, private storage: AngularFireStorage) {
+    this.usersCollection = firestore.collection<User>('users');
+  }
 
   // Método para obtener las clases por modalidad, con nombre del profesor
   getClassesByModality(modality: string): Observable<(Class & { professorName: string })[]> {
@@ -130,6 +132,13 @@ export class ConsultasService {
       });
     });
   }
+
+  getTesisData(tesisId: string): Observable<any> {
+    return this.firestore.collection('tesis').doc(tesisId).valueChanges().pipe(
+      map((tesis: any) => tesis ? tesis.personalData : null)  // Accede a personalData directamente
+    );
+  }
+
 
   updateTesis(tesisId: string, updateData: any): Observable<void> {
     return new Observable<void>(observer => {
@@ -257,7 +266,31 @@ export class ConsultasService {
 
 
 
+  addUser(userData: Partial<User>): Promise<DocumentReference<User>> {
+    // Validación básica de datos requeridos
+    if (!userData.email || !userData.firstName || !userData.lastName || !userData.role) {
+      return Promise.reject(new Error("Faltan datos requeridos para el usuario (email, nombre, apellido, rol)."));
+    }
 
+    // 1. Añadir el documento sin el campo 'id' inicialmente
+    return this.usersCollection.add(userData as User)
+      .then(docRef => {
+        // 2. Una vez creado, obtener el ID y actualizar el documento
+        console.log(`Usuario ${userData.email} agregado con ID: ${docRef.id}. Actualizando con campo 'id'...`);
+        // 3. Realizar la actualización para añadir el campo 'id'
+        return docRef.update({ id: docRef.id })
+          .then(() => {
+            console.log(`Campo 'id' actualizado para ${docRef.id}.`);
+            // 4. Devolver la referencia original después de la actualización exitosa
+            return docRef;
+          });
+      })
+      .catch(error => {
+        console.error(`Error al agregar o actualizar usuario ${userData.email}:`, error);
+        // Re-lanza el error para que pueda ser manejado por la función que llama (saveUsersBatch)
+        throw new Error(`Error procesando ${userData.email}: ${error.message || error}`);
+      });
+  }
 
 
 }
