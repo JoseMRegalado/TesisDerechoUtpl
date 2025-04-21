@@ -37,6 +37,7 @@ const appRoutes: Routes = [
   { path: 'data', component: AdminDataComponent },
   { path: 'ciclo', component: CicloComponent },
   { path: 'flujo', component: FlujoComponent },
+  { path: 'rubrica', component: RubricaComponent },
 ];
 
 @NgModule({

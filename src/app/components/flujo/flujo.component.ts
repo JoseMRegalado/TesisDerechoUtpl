@@ -278,10 +278,7 @@ export class FlujoComponent implements OnInit {
   }
 
 
-  visualizarRubrica() {
-    // Lógica para visualizar la rúbrica (puede ser una redirección, un modal, etc.)
-    console.log("Mostrando rúbrica...");
-  }
+
 
 
 }

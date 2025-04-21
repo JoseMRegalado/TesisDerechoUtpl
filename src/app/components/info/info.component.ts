@@ -37,6 +37,10 @@ export class InfoComponent implements OnInit {
   // Nueva propiedad para el rol seleccionado en el <select>
   selectedRoleForUpload: 'director' | 'equipo evaluador' | null = null;
 
+
+  cycles: any[] = [];
+  selectedCycleId: string = '';
+
   constructor(
     private loginService: LoginService,
     private consultasService: ConsultasService,
@@ -58,6 +62,9 @@ export class InfoComponent implements OnInit {
         console.error('No se encontró el usuario autenticado.');
       }
     });
+    this.consultasService.getCycles().subscribe(cycles => {
+      this.cycles = cycles;
+    });
   }
 
 
@@ -67,7 +74,7 @@ export class InfoComponent implements OnInit {
   }
 
   isButtonEnabled(): boolean {
-    return this.selectedRole !== null && this.selectedClass !== null && !this.isCreatingTesis;
+    return this.selectedCycleId !== null && this.selectedClass !== null && !this.isCreatingTesis;
   }
 
   goToProfile(): void {
@@ -110,6 +117,9 @@ export class InfoComponent implements OnInit {
           return throwError(() => new Error('Director seleccionado inválido o le faltan datos (id, firstName, lastName).'));
         }
 
+        const cicloSeleccionado = this.cycles.find(c => c.id === this.selectedCycleId);
+        const cicloName = cicloSeleccionado ? cicloSeleccionado.name : '';
+
         // 3. Preparar datos de la nueva tesis
         const tesisData = {
           studentName: `${user.firstName} ${user.lastName}`,
@@ -124,7 +134,8 @@ export class InfoComponent implements OnInit {
           progress: 0, // Progreso inicial
           Facultad: 'Facultad de Ciencias Jurídicas y Políticas', // Puedes hacerlo dinámico si es necesario
           Carrera: 'Derecho', // Puedes hacerlo dinámico si es necesario
-          createdAt: new Date() // Fecha de creación
+          createdAt: new Date(), // Fecha de creación
+          ciclo: cicloName,
           // Agrega cualquier otro campo inicial necesario
         };
 
@@ -333,6 +344,8 @@ export class InfoComponent implements OnInit {
       // this.selectedRoleForUpload = null;
     }
   }
+
+
 
 
 }

@@ -16,10 +16,12 @@
   <!-- Vista para estudiantes -->
   <div *ngIf="userRole === 'estudiante'" class="seleccion">
     <div class="roles-selection">
-      <select id="roles" [(ngModel)]="selectedRole" [disabled]="!availableRoles.length">
-        <option value="" disabled [ngValue]="null">Selecciona una opción</option>
-        <option *ngFor="let role of availableRoles" [value]="role">{{ role | titlecase }}</option>
+      <label for="cycle">Seleccionar ciclo:</label>
+      <select id="cycle" [(ngModel)]="selectedCycleId" name="cycle" required>
+        <option value="" disabled selected>-- Elige un ciclo --</option>
+        <option *ngFor="let ciclo of cycles" [value]="ciclo.id">{{ ciclo.name }}</option>
       </select>
+
     </div>
 
     <div class="modality-selection">

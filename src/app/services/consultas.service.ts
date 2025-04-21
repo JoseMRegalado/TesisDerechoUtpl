@@ -292,5 +292,10 @@ export class ConsultasService {
       });
   }
 
+  getCycles() {
+    return this.firestore.collection('cycle').valueChanges({ idField: 'id' });
+  }
+
+
 
 }

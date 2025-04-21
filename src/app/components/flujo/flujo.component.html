@@ -16,7 +16,7 @@
 
     <!-- Botón para visualizar rúbrica cuando el porcentaje del director sea 100 -->
     <div *ngIf="ultimoPorcentajeDirector === 100" class="rubrica-container">
-      <button (click)="visualizarRubrica()">Visualizar Rúbrica</button>
+      <button [routerLink]="['/rubrica']" [queryParams]="{ tesisId: tesisId }">Visualizar Rúbrica</button>
     </div>
 
   </div>
@@ -211,6 +211,7 @@
       <th>Descripción</th>
       <th>Evidencia</th>
       <th>Asistencia</th>
+      <th>Usuario</th>
     </tr>
     </thead>
     <tbody>
@@ -234,6 +235,7 @@
           <option value="No asistió">No asistió</option>
         </select>
       </td>
+      <td>{{ reunion.autor }}</td>
     </tr>
     </tbody>
   </table>

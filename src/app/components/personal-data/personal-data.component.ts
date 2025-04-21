@@ -83,6 +83,7 @@ export class PersonalDataComponent {
               this.disabilityPercentage = data.disabilityPercentage || null;
               this.hasScholarship = data.hasScholarship || false;
               this.scholarshipPercentage = data.scholarshipPercentage || null;
+              this.idDocPhotoURL = data.idPhotoURL || null;
             }
           });
         }
@@ -133,11 +134,20 @@ export class PersonalDataComponent {
           }
 
           if (this.idDocPhoto) {
-            uploadTasks.push(this.consultasService.uploadImage(userId, this.idDocPhoto, 'idDocs').toPromise().then(url => url ?? null));
+            uploadTasks.push(this.consultasService.uploadImage(userId, this.idDocPhoto, 'idDocs').toPromise().then(url => {
+              this.idDocPhotoURL = url ?? null; // Store the URL immediately after upload
+              return this.idDocPhotoURL;
+            }));
+          } else if (this.idDocPhotoURL) {
+            uploadTasks.push(Promise.resolve(this.idDocPhotoURL)); // If already uploaded, keep the URL
+          } else {
+            uploadTasks.push(Promise.resolve(null));
           }
 
           if (this.idDiscPhoto && this.hasDisability) {
             uploadTasks.push(this.consultasService.uploadImage(userId, this.idDiscPhoto, 'disabilities').toPromise().then(url => url ?? null));
+          } else {
+            uploadTasks.push(Promise.resolve(null));
           }
 
           // Esperar a que todas las imágenes se suban y obtener las URLs
@@ -167,7 +177,7 @@ export class PersonalDataComponent {
               hasScholarship: this.hasScholarship,
               scholarshipPercentage: this.scholarshipPercentage,
               idPhotoURL: downloadURLs[0] || null,
-              idDocPhotoURL: downloadURLs[1] || null,
+              idDocPhotoURL: downloadURLs[1] || this.idDocPhotoURL || null, // Use the stored URL if available
               idDiscPhotoURL: downloadURLs[2] || null
             };
 
@@ -198,6 +208,9 @@ export class PersonalDataComponent {
     const file: File = event.target.files[0];
     if (file) {
       this[field] = file; // Asigna el archivo al campo correspondiente (idPhoto, idDocPhoto, idDiscPhoto)
+      if (field === 'idDocPhoto') {
+        this.idDocPhotoURL = null; // Reset the URL when a new file is selected
+      }
     }
   }
 
