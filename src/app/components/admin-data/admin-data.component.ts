@@ -31,7 +31,7 @@ export class AdminDataComponent implements OnInit {
 
   // Inicializa los 8 recuadros del primer tipo
   initializeRecuadros() {
-    this.recuadros = Array(8).fill(0).map((_, index) => ({
+    this.recuadros = Array(6).fill(0).map((_, index) => ({
       titulo: `Notificación ${index + 1}`,
       fechaEnvio: null,
       correo: '',

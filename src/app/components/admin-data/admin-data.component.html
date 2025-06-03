@@ -1,16 +1,20 @@
 <app-header></app-header>
 <app-text></app-text>
+<app-heading></app-heading>
 <app-bar></app-bar>
+<h2>Datos Administrativos del Trabajo de Titulación</h2>
 <div class="container">
-  <h1>Datos Administrativos del Trabajo de Titulación</h1>
-
   <!-- Primer tipo de recuadro (se repite 8 veces) -->
   <div *ngFor="let recuadro of recuadros" class="recuadro">
     <h3>{{ recuadro.titulo }}</h3>
     <p>Fecha: {{ recuadro.fechaEnvio ? recuadro.fechaEnvio : currentDate }}</p>
 
     <input type="email" [(ngModel)]="recuadro.correo" placeholder="Correo electrónico" />
-    <input type="file" (change)="onFileSelected($event, recuadro)" accept="application/pdf" />
+    <input type="file" id="archivo" (change)="onFileSelected($event, recuadro)" accept="application/pdf" />
+    <label  for="archivo" class="custom-file-upload">
+      <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
+      Adjunta tu documento aquí
+    </label>
     <button (click)="sendEmail(recuadro)">Enviar</button>
   </div>
 
