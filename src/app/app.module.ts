@@ -25,19 +25,20 @@ import { CicloComponent } from './components/ciclo/ciclo.component';
 import { FlujoComponent } from './components/flujo/flujo.component';
 import { HeadingComponent } from './components/heading/heading.component';
 import { RubricaComponent } from './components/rubrica/rubrica.component';
+import {AuthGuard} from "./guards/auth.guard";
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'info', component: InfoComponent},
-  {path: 'profile', component: ProfileComponent},
-  { path: 'personal', component: PersonalDataComponent },
-  { path: 'docs', component: DocumentosComponent },
-  { path: 'data', component: AdminDataComponent },
-  { path: 'ciclo', component: CicloComponent },
-  { path: 'flujo', component: FlujoComponent },
-  { path: 'rubrica', component: RubricaComponent },
+  {path: 'info', component: InfoComponent, canActivate: [AuthGuard]},
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  { path: 'personal', component: PersonalDataComponent, canActivate: [AuthGuard] },
+  { path: 'docs', component: DocumentosComponent, canActivate: [AuthGuard] },
+  { path: 'data', component: AdminDataComponent, canActivate: [AuthGuard] },
+  { path: 'ciclo', component: CicloComponent, canActivate: [AuthGuard] },
+  { path: 'flujo', component: FlujoComponent, canActivate: [AuthGuard] },
+  { path: 'rubrica', component: RubricaComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
