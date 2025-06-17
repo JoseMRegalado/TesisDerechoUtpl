@@ -5,6 +5,7 @@ import { LoginService } from '../../services/login.service'; // Importa el Login
 import User from '../../interfaces/user.interface';
 import { Observable } from 'rxjs';
 import {ActivatedRoute} from "@angular/router";
+import {AlertaService} from "../../services/alert.service";
 
 @Component({
   selector: 'app-flujo',
@@ -32,7 +33,8 @@ export class FlujoComponent implements OnInit {
     private firestore: AngularFirestore,
     private storage: AngularFireStorage,
     private loginService: LoginService,
-    private route: ActivatedRoute// Inyecta el LoginService
+    private route: ActivatedRoute,// Inyecta el LoginService
+    private alertaService: AlertaService
   ) {}
 
   ngOnInit(): void {
@@ -135,6 +137,11 @@ export class FlujoComponent implements OnInit {
     const esDirector = this.usuarioLoggeado.role === 'director';
 
     if (esEstudiante && this.form.porcentaje <= this.ultimoPorcentajeEstudiante) {
+      this.alertaService.mostrarAlerta(
+        'error',
+        'El porcentaje debe ser mayor a ${this.ultimoPorcentajeEstudiante}%',
+        'El oficio fue guardado correctamente.'
+      );
       alert(`El porcentaje debe ser mayor a ${this.ultimoPorcentajeEstudiante}%`);
       return;
     }

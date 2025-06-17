@@ -26,6 +26,7 @@ import { FlujoComponent } from './components/flujo/flujo.component';
 import { HeadingComponent } from './components/heading/heading.component';
 import { RubricaComponent } from './components/rubrica/rubrica.component';
 import {AuthGuard} from "./guards/auth.guard";
+import { AlertaComponent } from './components/alerta/alerta.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -42,7 +43,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent, HomeComponent, LoginComponent, InfoComponent, ProfileComponent, PersonalDataComponent, BarComponent, DocumentosComponent, Footer2Component,  TextComponent, AdminDataComponent, CicloComponent, FlujoComponent, HeadingComponent, RubricaComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, HomeComponent, LoginComponent, InfoComponent, ProfileComponent, PersonalDataComponent, BarComponent, DocumentosComponent, Footer2Component,  TextComponent, AdminDataComponent, CicloComponent, FlujoComponent, HeadingComponent, RubricaComponent, AlertaComponent,],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),

@@ -4,6 +4,7 @@ import { LoginService } from '../../services/login.service';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import {ActivatedRoute} from "@angular/router";
+import {AlertaService} from "../../services/alert.service";
 
 @Component({
   selector: 'app-documentos',
@@ -214,6 +215,9 @@ export class DocumentosComponent implements OnInit {
 
     this.consultasService.updateDocumentsStates(this.tesisId!, documentosActualizados)
       .then(() => {
+
+
+
         alert("Estados actualizados correctamente.");
         this.loadDocuments(); // Recargar documentos
       })
