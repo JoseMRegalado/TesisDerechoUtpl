@@ -15,7 +15,12 @@
       <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
       Adjunta tu documento aquí
     </label>
-    <button (click)="sendEmail(recuadro)">Enviar</button>
+    <button
+      [disabled]="!esSecretario || recuadro.fechaEnvio"
+      (click)="sendEmail(recuadro)"
+    >
+      {{ recuadro.fechaEnvio ? 'Enviado' : esSecretario ? 'Enviar' : 'Pendiente' }}
+    </button>
   </div>
 
   <!-- Segundo tipo de recuadro -->
@@ -23,9 +28,14 @@
     <h3>Aprobación del trabajo de titulación del director</h3>
     <p>Fecha: {{ fechaEnvioDirector ? fechaEnvioDirector : currentDate }}</p>
 
-    <p>Director: {{ director.firstName }} {{ director.lastName }}</p>
+    <p>Director: {{ directorName }}</p>
     <input type="datetime-local" [(ngModel)]="selectedDateTime" />
-    <button (click)="sendToDirector()">Enviar</button>
+    <button
+      [disabled]="!esSecretario || fechaEnvioDirector"
+      (click)="sendToDirector()"
+    >
+      {{ fechaEnvioDirector ? 'Enviado' : esSecretario ? 'Enviar' : 'Pendiente' }}
+    </button>
   </div>
 </div>
 <app-footer2></app-footer2>

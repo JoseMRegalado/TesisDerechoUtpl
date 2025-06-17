@@ -3,6 +3,9 @@ import { ConsultasService } from '../../services/consultas.service'; // Servicio
 import { LoginService } from '../../services/login.service'; // Servicio de autenticación
 import { EmailService } from '../../services/email.service'; // Servicio para enviar correos
 import { formatDate } from '@angular/common';
+import {ActivatedRoute, Router} from "@angular/router";
+import {AngularFirestore} from "@angular/fire/compat/firestore";
+import {AngularFireStorage} from "@angular/fire/compat/storage";
 
 @Component({
   selector: 'app-admin-data',
@@ -16,17 +19,52 @@ export class AdminDataComponent implements OnInit {
   selectedDateTime: string = '';
   fechaEnvioDirector: string | null = null;
 
+  usuarioActual: any = {};
+  esSecretario: boolean = false;
+
+  tesisId: string | null = null;
+  directorName: string = '';
+
   constructor(
     private consultasService: ConsultasService,
     private loginService: LoginService,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private firestore: AngularFirestore,
+    private storage: AngularFireStorage,
+    private route: ActivatedRoute
+
   ) {
     this.currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en');
   }
 
   ngOnInit() {
-    this.loadDirector();
-    this.initializeRecuadros();
+    this.initializeRecuadros(); // Puedes mantenerla aquí si siempre deben mostrarse
+    this.route.queryParams.subscribe(params => {
+      this.tesisId = params['tesisId'];
+      if (this.tesisId) {
+        this.loadTesisData();
+      }
+    });
+    this.loginService.getCurrentUser().subscribe(user => {
+      this.usuarioActual = user;
+      this.esSecretario = user?.role === 'secretario';
+    });
+    this.loadTesisData(); // Si usas directorName
+
+  }
+
+
+  loadTesisData() {
+    this.firestore
+      .collection('tesis')
+      .doc(this.tesisId!)
+      .get()
+      .subscribe(docSnap => {
+        if (docSnap.exists) {
+          const data = docSnap.data() as any;
+          this.directorName = data.directorName || 'Nombre no disponible';
+        }
+      });
   }
 
   // Inicializa los 8 recuadros del primer tipo
