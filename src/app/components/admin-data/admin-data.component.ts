@@ -25,6 +25,9 @@ export class AdminDataComponent implements OnInit {
   tesisId: string | null = null;
   directorName: string = '';
 
+  avanceDirectorAlCien: boolean = false;
+
+
   constructor(
     private consultasService: ConsultasService,
     private loginService: LoginService,
@@ -43,6 +46,8 @@ export class AdminDataComponent implements OnInit {
       this.tesisId = params['tesisId'];
       if (this.tesisId) {
         this.loadTesisData();
+        this.verificarAvanceDirector(); // aquí
+
       }
     });
     this.loginService.getCurrentUser().subscribe(user => {
@@ -50,6 +55,8 @@ export class AdminDataComponent implements OnInit {
       this.esSecretario = user?.role === 'secretario';
     });
     this.loadTesisData(); // Si usas directorName
+    this.verificarAvanceDirector(); // aquí
+
 
   }
 
@@ -130,5 +137,33 @@ export class AdminDataComponent implements OnInit {
             alert('Por favor, seleccione una fecha y hora.');
         }
     }
+
+  verificarAvanceDirector() {
+    this.firestore
+      .collection('tesis')
+      .doc(this.tesisId!)
+      .collection('flujo', ref =>
+        ref.where('rol', '==', 'director')
+      )
+      .get()
+      .subscribe(querySnap => {
+        if (querySnap.empty) {
+          this.avanceDirectorAlCien = false;
+          return;
+        }
+
+        // Buscar la evidencia con la fecha más reciente manualmente
+        const evidencias = querySnap.docs.map(doc => doc.data() as any);
+
+        const evidenciaMasReciente = evidencias.reduce((a, b) =>
+          new Date(a.fechaRegistro) > new Date(b.fechaRegistro) ? a : b
+        );
+
+        this.avanceDirectorAlCien = evidenciaMasReciente.porcentaje === 100;
+        console.log('📌 Porcentaje más reciente del director:', evidenciaMasReciente.porcentaje);
+      });
+  }
+
+
 
 }

@@ -16,10 +16,16 @@
       Adjunta tu documento aquí
     </label>
     <button
-      [disabled]="!esSecretario || recuadro.fechaEnvio"
+      [disabled]=" !avanceDirectorAlCien || !esSecretario || recuadro.fechaEnvio"
       (click)="sendEmail(recuadro)"
     >
-      {{ recuadro.fechaEnvio ? 'Enviado' : esSecretario ? 'Enviar' : 'Pendiente' }}
+      {{
+      recuadro.fechaEnvio
+        ? 'Enviado'
+        : avanceDirectorAlCien
+          ? (esSecretario ? 'Enviar' : 'Pendiente')
+          : 'Pendiente1'
+      }}
     </button>
   </div>
 
