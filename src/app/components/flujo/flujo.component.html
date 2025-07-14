@@ -126,16 +126,13 @@
               </label>
             </div>
           </div>
+          <div class="form-group">
+            <label>Porcentaje de Avance:</label>
+            <input type="number" [(ngModel)]="form.porcentaje" name="porcentaje"
+                   [min]="!(usuarioLoggeado) || usuarioLoggeado.role === 'estudiante' ? (ultimoPorcentajeEstudiante + 1) : (ultimoPorcentajeDirector + 1)"
+                   max="100" step="1">
+          </div>
         </div>
-
-        <div class="form-group">
-          <label>Porcentaje de Avance:</label>
-          <input type="number" [(ngModel)]="form.porcentaje" name="porcentaje"
-                 [min]="!(usuarioLoggeado) || usuarioLoggeado.role === 'estudiante' ? (ultimoPorcentajeEstudiante + 1) : (ultimoPorcentajeDirector + 1)"
-                 max="100" step="1">
-        </div>
-
-
 
         <div class="modal-buttons">
           <button type="button" class="cancel-btn" (click)="cerrarDialogo()">Cancelar</button>

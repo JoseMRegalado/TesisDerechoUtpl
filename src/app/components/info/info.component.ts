@@ -8,6 +8,7 @@ import Class from '../../interfaces/classes.interface';
 import autoTable from "jspdf-autotable";
 import {jsPDF} from "jspdf";
 import * as XLSX from 'xlsx'; // Importar la librería xlsx
+import {AlertaService} from "../../services/alert.service";
 
 @Component({
   selector: 'app-info',
@@ -44,7 +45,8 @@ export class InfoComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private consultasService: ConsultasService,
-    private router: Router
+    private router: Router,
+    private alertaService: AlertaService
   ) {}
 
   ngOnInit(): void {
@@ -147,13 +149,14 @@ export class InfoComponent implements OnInit {
         console.error('Error en el proceso de creación de tesis:', error);
         this.isCreatingTesis = false; // Desbloquea el botón en caso de error
         // Podrías mostrar un mensaje al usuario aquí
-        alert(`Error al crear la tesis: ${error.message || error}`);
+        this.alertaService.mostrarAlerta('error', 'Error al crear tesis', error.message);
         return of(null); // Devuelve un observable nulo para que la subscripción no falle
       })
     ).subscribe({
       next: (tesisId) => {
         if (tesisId) { // Solo navega si se obtuvo un ID de tesis válido
           console.log('Tesis creada con ID:', tesisId);
+          this.alertaService.mostrarAlerta('exito', 'Tesis creada', 'La tesis fue creada correctamente.');
           this.router.navigate(['/profile'], { queryParams: { tesisId: tesisId } });
         }
         // Si tesisId es null (por el catchError), no navega pero ya se manejó el error.
@@ -330,6 +333,7 @@ export class InfoComponent implements OnInit {
         console.error("Errores detallados:", errorMessages);
       } else {
         this.isError = false;
+        this.alertaService.mostrarAlerta('exito', 'Usuarios registrados', 'Todos los usuarios fueron guardados correctamente.');
       }
     } catch (finalError: any) {
       this.feedbackMessage = `Error inesperado durante el guardado: ${finalError.message}`;

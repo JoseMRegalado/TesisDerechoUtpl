@@ -26,7 +26,7 @@ export class DocumentosComponent implements OnInit {
   role: string = '';
 
   constructor(private consultasService: ConsultasService, private loginService: LoginService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute, private alertaService: AlertaService) {}
 
   ngOnInit() {
     // Obtener el parámetro tesisId de los queryParams
@@ -102,45 +102,86 @@ export class DocumentosComponent implements OnInit {
     }
   }
 
-
+  archivoCargado: boolean = false;
   onFileSelected(event: any) {
     this.newDocument.file = event.target.files[0];
+    this.archivoCargado = true;
   }
 
   // Confirmar y guardar un nuevo documento en la tesis
   confirmDocument() {
-    if (this.newDocument.descripcion && this.newDocument.fechaIngreso && this.newDocument.file) {
-      if (this.tesisId) {  // Verificación de que la tesisId no sea null
-        this.consultasService.uploadImage(this.currentUserId, this.newDocument.file, 'documentos').subscribe((downloadURL) => {
-          if (downloadURL) {
-            const documentData = {
-              descripcion: this.newDocument.descripcion,
-              fechaIngreso: this.newDocument.fechaIngreso,
-              link: downloadURL,
-              fechaValidacion: null,
-              observaciones: 'Ninguna',
-              docente: 'En espera',
-              director: 'En espera',
-              secretario: 'En espera',
-              userId: this.currentUserId
-            };
+    // ✅ Validación de campos obligatorios antes de continuar
+    if (!this.newDocument.descripcion || !this.newDocument.fechaIngreso || !this.newDocument.file) {
+      this.alertaService.mostrarAlerta(
+        'error',
+        'Campos incompletos',
+        'Debes llenar todos los campos y subir un archivo antes de confirmar.'
+      );
+      return;
+    }
 
-            this.consultasService.saveDocumentInTesis(this.tesisId!, documentData).then(() => {
-              this.documents.push(documentData);
-              this.newDocument = { descripcion: '', fechaIngreso: null, file: null };
-              this.addingDocument = false;
-            }).catch(error => {
-              console.error('Error al guardar el documento: ', error);
-            });
-          }
-        });
-      } else {
-        console.error('No se encontró el ID de la tesis para asociar el documento.');
-      }
+    if (this.tesisId) {  // Verificación de que la tesisId no sea null
+      this.consultasService.uploadImage(this.currentUserId, this.newDocument.file, 'documentos').subscribe((downloadURL) => {
+        if (downloadURL) {
+          const documentData = {
+            descripcion: this.newDocument.descripcion,
+            fechaIngreso: this.newDocument.fechaIngreso,
+            link: downloadURL,
+            fechaValidacion: null,
+            observaciones: 'Ninguna',
+            docente: 'En espera',
+            director: 'En espera',
+            secretario: 'En espera',
+            userId: this.currentUserId
+          };
+
+          this.consultasService.saveDocumentInTesis(this.tesisId!, documentData).then(() => {
+            this.documents.push(documentData);
+            this.newDocument = { descripcion: '', fechaIngreso: null, file: null };
+            this.addingDocument = false;
+
+            // ✅ Alerta de éxito al guardar
+            this.alertaService.mostrarAlerta(
+              'exito',
+              'Documento agregado',
+              'El documento se ha agregado correctamente.'
+            );
+          }).catch(error => {
+            console.error('Error al guardar el documento: ', error);
+            // ❌ Alerta de error al guardar documento
+            this.alertaService.mostrarAlerta(
+              'error',
+              'Error al guardar',
+              'Ocurrió un error al guardar el documento. Intenta nuevamente.'
+            );
+          });
+        } else {
+          // ❌ Alerta si la URL no se genera
+          this.alertaService.mostrarAlerta(
+            'error',
+            'Error al subir archivo',
+            'No se pudo subir el archivo. Intenta nuevamente.'
+          );
+        }
+      }, error => {
+        console.error('Error al subir archivo:', error);
+        // ❌ Alerta si ocurre un error al subir el archivo
+        this.alertaService.mostrarAlerta(
+          'error',
+          'Error al subir archivo',
+          'No se pudo subir el archivo. Verifica tu conexión.'
+        );
+      });
+    } else {
+      console.error('No se encontró el ID de la tesis para asociar el documento.');
+      // ❌ Alerta si falta el ID de tesis
+      this.alertaService.mostrarAlerta(
+        'error',
+        'Error de referencia',
+        'No se encontró la tesis para asociar el documento.'
+      );
     }
   }
-
-
 
   printDocument() {
     const doc = new jsPDF();
@@ -203,26 +244,38 @@ export class DocumentosComponent implements OnInit {
 
     // Verificar si hay documentos sin estado seleccionado
     if (documentosActualizados.some(doc => !doc[this.role])) {
-      alert("Todos los documentos deben tener un estado.");
+      this.alertaService.mostrarAlerta(
+        'error',
+        'Validación requerida',
+        'Todos los documentos deben tener un estado.');
       return;
     }
 
     // Si es director, validar que todas las fechas de validación estén seleccionadas
     if (this.role === 'director' && documentosActualizados.some(doc => !doc.fechaValidacion)) {
-      alert("Debe seleccionar una fecha de validación para todos los documentos.");
+      this.alertaService.mostrarAlerta(
+        'error',
+        'Fecha de validación faltante',
+        'Debe seleccionar una fecha de validación para todos los documentos.'
+      );
       return;
     }
 
     this.consultasService.updateDocumentsStates(this.tesisId!, documentosActualizados)
       .then(() => {
-
-
-
-        alert("Estados actualizados correctamente.");
+        this.alertaService.mostrarAlerta(
+          'exito',
+          'Actualización exitosa',
+          'Estados actualizados correctamente.'
+        );
         this.loadDocuments(); // Recargar documentos
       })
       .catch(error => {
-        console.error('Error al actualizar estados:', error);
+        this.alertaService.mostrarAlerta(
+          'error',
+          'Error de actualización',
+          'No se pudieron actualizar los estados de los documentos.'
+        );
       });
   }
 

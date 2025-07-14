@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConsultasService } from '../../services/consultas.service';
-
+import {AlertaService} from "../../services/alert.service";
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -21,7 +21,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private consultasService: ConsultasService,
-    private router: Router
+    private router: Router,
+    private alertaService: AlertaService
   ) {}
 
   ngOnInit(): void {
@@ -56,24 +57,51 @@ export class ProfileComponent implements OnInit {
     this.consultasService.updateTesis(this.tesisId, updateData).subscribe({
       next: () => {
         console.log(`Respuesta guardada en ${answerField}:`, this.currentAnswer);
+        this.alertaService.mostrarAlerta(
+          'exito',
+          'Respuesta guardada',
+          `Tu respuesta a la pregunta ${this.currentQuestionIndex + 1} ha sido registrada correctamente.`
+        );
+
         this.currentAnswer = '';  // Limpiar el campo de respuesta
       },
       error: (error) => {
         console.error('Error al guardar la respuesta:', error);
+        this.alertaService.mostrarAlerta(
+          'error',
+          'Error al guardar',
+          'Ocurrió un problema al guardar tu respuesta. Intenta nuevamente.'
+        );
+
       }
     });
   }
 
   nextQuestion(): void {
     // Guardar la respuesta antes de avanzar a la siguiente pregunta
+    if (!this.currentAnswer.trim()) {
+      this.alertaService.mostrarAlerta(
+        'error',
+        'Respuesta requerida',
+        'Por favor, responde la pregunta antes de continuar.'
+      );
+      return;
+    }
     this.saveAnswer();
 
     if (this.currentQuestionIndex < this.questions.length - 1) {
       this.currentQuestionIndex++;
     } else {
       this.buttonText = 'Finalizar';
+      this.alertaService.mostrarAlerta(
+        'exito',
+        'Encuesta completada',
+        'Gracias por responder. Serás redirigido al seguimiento.'
+      );
       // Al finalizar, redirigir al componente /personal con el ID de la tesis
-      this.router.navigate(['/personal'], { queryParams: { tesisId: this.tesisId } });
+      setTimeout(() => {
+        this.router.navigate(['/personal'], { queryParams: { tesisId: this.tesisId } });
+      }, 1500);
     }
   }
 }

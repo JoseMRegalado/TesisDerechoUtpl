@@ -11,9 +11,9 @@
 
     <label for="document" class="required-label">Documento de Identidad</label>
     <select id="document" [disabled]="userRole !== 'estudiante'" [(ngModel)]="selectedDocument">
-      <option value="pasaporte">Pasaporte</option>
-      <option value="residencia">Residencia</option>
-      <option value="cedula">Cédula</option>
+      <option value="pasaporte">PASAPORTE</option>
+      <option value="residencia">RESIDENCIA</option>
+      <option value="cedula">CÉDULA</option>
     </select>
     </div>
     <!-- Número de identidad -->
@@ -34,7 +34,7 @@
       <input type="file" id="idDocPhoto" [disabled]="userRole !== 'estudiante'" (change)="onFileSelected($event, 'idDocPhoto')" />
       <label  for="fileUpload" class="custom-file-upload">
         <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
-        Adjunta tu documento aquí
+        {{ archivoCargado ? 'Archivo cargado' : 'Adjunta tu documento aquí' }}
       </label>
       <span class="file-types">Puede ser pdf, png, jpg</span>
       <div *ngIf="idDocPhotoURL" class="uploaded-file">
@@ -76,9 +76,9 @@
       <div class="campo">
         <label for="gender" class="required-label">Sexo</label>
         <select id="gender" [disabled]="userRole !== 'estudiante'" [(ngModel)]="gender" required>
-          <option value="masculino">Masculino</option>
-          <option value="femenino">Femenino</option>
-          <option value="otro">Otro</option>
+          <option value="masculino">MASCULINO</option>
+          <option value="femenino">FEMENINO</option>
+          <option value="otro">OTRO</option>
         </select>
       </div>
 
@@ -92,10 +92,10 @@
         <!-- Foto ID UTPL -->
         <label class="required-label">Foto ID UTPL</label>
         <div class="file-upload-container">
-          <input type="file" id="fileUpload" [disabled]="userRole !== 'estudiante'" (change)="onFileSelected($event, 'idPhoto')" />
-          <label for="fileUpload" class="custom-file-upload">
+          <input type="file" id="fileUpload1" [disabled]="userRole !== 'estudiante'" (change)="onFileSelected($event, 'idPhoto')" />
+          <label for="fileUpload1" class="custom-file-upload">
             <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
-            Adjunta tu foto aquí (png, jpg)
+            {{ archivoCargado ? 'Archivo cargado' : 'Adjunta tu foto aquí' }}
           </label>
         </div>
       </div>
@@ -138,7 +138,7 @@
         <!-- País -->
         <label for="country" class="required-label">País</label>
         <select id="country" [disabled]="userRole !== 'estudiante'" [(ngModel)]="country" required>
-          <option value="ecuador">Ecuador</option>
+          <option value="ecuador">ECUADOR</option>
         </select>
       </div>
 
@@ -189,7 +189,7 @@
           <input type="file" id="idDiscPhoto" [disabled]="userRole !== 'estudiante'" (change)="onFileSelected($event, 'idDiscPhoto')" />
           <label for="idDiscPhoto" class="custom-file-upload">
             <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
-            Adjunta tu foto aquí (pdf, word)
+            {{ archivoCargado ? 'Archivo cargado' : 'Adjunta tu documento aquí' }}
           </label>
         </div>
       </div>
@@ -202,10 +202,10 @@
       <div class="campo">
       <label for="laborActivity" class="required-label">Actividad Laboral</label>
       <select id="laborActivity" [(ngModel)]="laborActivity" [disabled]="userRole !== 'estudiante'">
-        <option value="empleado">Empleado</option>
-        <option value="estudiante">Estudiante</option>
-        <option value="desempleado">Desempleado</option>
-        <option value="otro">Otro</option>
+        <option value="empleado">EMPLEADO</option>
+        <option value="estudiante">ESTUDIANTE</option>
+        <option value="desempleado">DESEMPLEADO</option>
+        <option value="otro">OTRO </option>
       </select>
       </div>
 

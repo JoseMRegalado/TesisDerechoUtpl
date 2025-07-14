@@ -126,6 +126,7 @@ input, select{
   gap: 5px;
   margin: 0;
   background-color: #fff;
+  align-items: center;
 }
 
 #archivo{

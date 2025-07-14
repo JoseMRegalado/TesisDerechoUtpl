@@ -61,7 +61,7 @@
       <input id="archivo" type="file" (change)="onFileSelected($event)" />
       <label for="archivo" class="custom-file-upload">
         <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
-        Adjunta tu documento aquí
+        {{ archivoCargado ? 'Archivo cargado' : 'Adjunta tu documento aquí' }}
       </label>
     </td>
     <td><input placeholder="Descripción" type="text" [(ngModel)]="newDocument.descripcion" /></td>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {ActivatedRoute, Router } from '@angular/router';
 import {ConsultasService} from "../../services/consultas.service";
 import {LoginService} from "../../services/login.service";
+import {AlertaService} from "../../services/alert.service";
 
 @Component({
   selector: 'app-personal-data',
@@ -9,7 +10,7 @@ import {LoginService} from "../../services/login.service";
   styleUrls: ['./personal-data.component.css']
 })
 export class PersonalDataComponent {
-  selectedDocument: string = 'cedula';
+  selectedDocument: string = 'CÉDULA';
   birthdate: string | null = null;
   utpldate: string | null = null;
   hasDisability: boolean = false;
@@ -18,7 +19,7 @@ export class PersonalDataComponent {
   identificacion:string = '';
   firstName: string = '';
   lastName: string = '';
-  gender: string = 'masculino';
+  gender: string = 'MASCULINO';
   nationality: string = '';
   idPhoto: File | null = null;
   idDocPhoto: File | null = null;
@@ -28,7 +29,7 @@ export class PersonalDataComponent {
   utplEmail: string = '';
   personalEmail: string = '';
   postalCode: number| null = null;
-  country: string = 'ecuador';
+  country: string = 'ECUADOR';
   province: string = '';
   landline: string = '';
   mobile: string = '';
@@ -46,6 +47,7 @@ export class PersonalDataComponent {
               private loginService: LoginService,
               private consultasService: ConsultasService,
               private route: ActivatedRoute,
+              private alertaService: AlertaService,
   ) {}
 
   ngOnInit() {
@@ -89,6 +91,8 @@ export class PersonalDataComponent {
         }
       } else {
         console.error('No se encontró el usuario autenticado.');
+        this.alertaService.mostrarAlerta('error', 'Error de autenticación', 'No se encontró el usuario autenticado.');
+
       }
     });
   }
@@ -119,7 +123,9 @@ export class PersonalDataComponent {
     if (this.isValid()) {
       if (!this.tesisId) {
         console.error("Tesis ID no está disponible.");
+        this.alertaService.mostrarAlerta('error', 'Error de registro', 'No se pudo identificar la tesis. Intenta volver a ingresar al formulario.');
         return; // Evita la ejecución si tesisId es null
+
       }
 
       this.loginService.getCurrentUser().subscribe(user => {
@@ -185,15 +191,34 @@ export class PersonalDataComponent {
             personalData = Object.fromEntries(
               Object.entries(personalData).filter(([_, v]) => v !== undefined)
             );
+            //Convertir todos los string a MAYÚSCULAS antes de guardar
+            Object.keys(personalData).forEach(key => {
+              const value = personalData[key];
+
+              if (typeof value === 'string') {
+                personalData[key] = value.toUpperCase();
+              } else if (Array.isArray(value) && value.every(v => typeof v === 'string')) {
+                personalData[key] = value.map(v => v.toUpperCase());
+              }
+            });
+
 
             // Guardar los datos personales como subcolección en la colección de tesis
             this.consultasService.saveTesisData(this.tesisId!, personalData).then(() => {
-              this.router.navigate(['/docs'], { queryParams: { tesisId: this.tesisId } });
+              this.alertaService.mostrarAlerta('exito', 'Datos guardados', 'Los datos personales se han guardado correctamente.');
+              setTimeout(() => {
+                this.router.navigate(['/docs'], { queryParams: { tesisId: this.tesisId } });
+              }, 5000);
             }).catch(error => {
               console.error("Error al guardar los datos personales en la tesis: ", error);
+              this.alertaService.mostrarAlerta('error', 'Error al guardar', 'Ocurrió un error al guardar los datos personales. Intenta nuevamente.');
+
+
             });
           }).catch(error => {
             console.error("Error al subir las imágenes: ", error);
+            this.alertaService.mostrarAlerta('error', 'Error al subir archivos', 'No se pudieron subir los documentos. Verifica tu conexión o intenta con archivos válidos.');
+
           });
         }
       });
@@ -203,7 +228,7 @@ export class PersonalDataComponent {
 
 
 
-
+  archivoCargado: boolean = false;
   onFileSelected(event: any, field: 'idPhoto' | 'idDocPhoto' | 'idDiscPhoto') {
     const file: File = event.target.files[0];
     if (file) {
@@ -212,6 +237,7 @@ export class PersonalDataComponent {
         this.idDocPhotoURL = null; // Reset the URL when a new file is selected
       }
     }
+    this.archivoCargado = true;
   }
 
 
@@ -237,6 +263,9 @@ export class PersonalDataComponent {
       (this.hasDisability ? (this.disabilityType !== '' && this.disabilityPercentage !== null) : true) &&
       (this.hasScholarship ? this.scholarshipPercentage !== null : true)
     );
+
   }
+
+
 
 }
