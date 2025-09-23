@@ -96,10 +96,10 @@
   </div>
 
   <div *ngIf="userRole === 'secretario'">
-    <h2>Gestión de Usuarios por Lote</h2>
+    <h2>Gestión de Usuarios</h2>
     <p>Carga un archivo Excel (.xlsx) con las columnas: <strong>nombre</strong>, <strong>apellido</strong>, <strong>email</strong>.</p>
 
-    <div style="margin-bottom: 15px;">
+    <div class="role-select" style="margin-bottom: 15px;">
       <label for="role-select" style="margin-right: 10px;"><strong>Rol a asignar:</strong></label>
       <select id="role-select" [(ngModel)]="selectedRoleForUpload">
         <option [ngValue]="null" disabled>-- Selecciona un rol --</option>
@@ -114,7 +114,7 @@
 
     <button (click)="processExcelFile()"
             [disabled]="!selectedFile || !selectedRoleForUpload || isLoading"
-            style="margin-top: 15px;">
+            style="margin: 15px; padding: 10px;" class="abs">
       {{ isLoading ? 'Procesando...' : 'Cargar Usuarios desde Archivo' }}
     </button>
 

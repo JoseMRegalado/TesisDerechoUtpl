@@ -2,46 +2,130 @@
 <app-text></app-text>
 <app-heading></app-heading>
 <app-bar></app-bar>
+
 <h2>Datos Administrativos del Trabajo de Titulación</h2>
 <div class="container">
-  <!-- Primer tipo de recuadro (se repite 8 veces) -->
-  <div *ngFor="let recuadro of recuadros" class="recuadro">
-    <h3>{{ recuadro.titulo }}</h3>
-    <p>Fecha: {{ recuadro.fechaEnvio ? recuadro.fechaEnvio : currentDate }}</p>
 
-    <input type="email" [(ngModel)]="recuadro.correo" placeholder="Correo electrónico" />
-    <input type="file" id="archivo" (change)="onFileSelected($event, recuadro)" accept="application/pdf" />
+  <!-- Docente de la asignatura -->
+  <div class="recuadro">
+    <h3>Docente de la asignatura</h3>
+    <p>Fecha: {{ recuadros.docente.fechaEnvio ? recuadros.docente.fechaEnvio : currentDate }}</p>
+    <input type="email" [(ngModel)]="recuadros.docente.correo" placeholder="Correo del docente" />
     <label  for="archivo" class="custom-file-upload">
       <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
       Adjunta tu documento aquí
     </label>
-    <button
-      [disabled]=" !avanceDirectorAlCien || !esSecretario || recuadro.fechaEnvio"
-      (click)="sendEmail(recuadro)"
-    >
-      {{
-      recuadro.fechaEnvio
-        ? 'Enviado'
-        : avanceDirectorAlCien
-          ? (esSecretario ? 'Enviar' : 'Pendiente')
-          : 'Pendiente1'
-      }}
+    <input id="archivo" type="file" (change)="onFileSelected($event, recuadros.docente)" accept="application/pdf" />
+    <button [disabled]="!esSecretario || recuadros.docente.fechaEnvio" (click)="sendEmail(recuadros.docente)">
+      {{ recuadros.docente.fechaEnvio ? 'Enviado' : 'Enviar' }}
     </button>
   </div>
 
-  <!-- Segundo tipo de recuadro -->
+  <!-- Notificación al director -->
+  <div class="recuadro">
+    <h3>Notificación al director</h3>
+    <p>Fecha: {{ recuadros.director.fechaEnvio ? recuadros.director.fechaEnvio : currentDate }}</p>
+    <input type="email" [(ngModel)]="recuadros.director.correo" placeholder="Correo del director" />
+    <label  for="archivo" class="custom-file-upload">
+      <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
+      Adjunta tu documento aquí
+    </label>
+    <input id="archivo" type="file" (change)="onFileSelected($event, recuadros.director)" accept="application/pdf" />
+    <button [disabled]="!avanceDirectorAlCien || !esSecretario || recuadros.director.fechaEnvio"
+            (click)="sendEmail(recuadros.director)">
+      {{ recuadros.director.fechaEnvio ? 'Enviado' : 'Enviar' }}
+    </button>
+  </div>
+
+  <!-- Notificación al equipo evaluador -->
+  <div class="recuadro">
+    <h3>Notificación al equipo evaluador</h3>
+    <p>Fecha: {{ recuadros.equipoEvaluador.fechaEnvio ? recuadros.equipoEvaluador.fechaEnvio : currentDate }}</p>
+    <input type="email" [(ngModel)]="recuadros.equipoEvaluador.correo" placeholder="Correo del equipo evaluador" />
+    <label  for="archivo" class="custom-file-upload">
+      <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
+      Adjunta tu documento aquí
+    </label>
+    <input id="archivo" type="file" (change)="onFileSelected($event, recuadros.equipoEvaluador)" accept="application/pdf" />
+    <button [disabled]="!esSecretario || recuadros.equipoEvaluador.fechaEnvio"
+            (click)="sendEmail(recuadros.equipoEvaluador)">
+      {{ recuadros.equipoEvaluador.fechaEnvio ? 'Enviado' : 'Enviar' }}
+    </button>
+  </div>
+
+  <!-- Aprobación del trabajo del director -->
   <div class="recuadro">
     <h3>Aprobación del trabajo de titulación del director</h3>
-    <p>Fecha: {{ fechaEnvioDirector ? fechaEnvioDirector : currentDate }}</p>
-
-    <p>Director: {{ directorName }}</p>
-    <input type="datetime-local" [(ngModel)]="selectedDateTime" />
-    <button
-      [disabled]="!esSecretario || fechaEnvioDirector"
-      (click)="sendToDirector()"
-    >
-      {{ fechaEnvioDirector ? 'Enviado' : esSecretario ? 'Enviar' : 'Pendiente' }}
+    <p>Fecha: {{ recuadros.aprobacionDirector.fechaEnvio ? recuadros.aprobacionDirector.fechaEnvio : currentDate }}</p>
+    <p>Nombre del director: {{ directorName }}</p>
+    <label  for="archivo" class="custom-file-upload">
+      <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
+      Adjunta tu documento aquí
+    </label>
+    <input id="archivo" type="file" (change)="onFileSelected($event, recuadros.aprobacionDirector)" accept="application/pdf" />
+    <button [disabled]="!esSecretario || recuadros.aprobacionDirector.fechaEnvio"
+            (click)="sendEmail(recuadros.aprobacionDirector)">
+      {{ recuadros.aprobacionDirector.fechaEnvio ? 'Enviado' : 'Enviar' }}
     </button>
   </div>
+
+  <!-- Aprobación del trabajo del equipo evaluador -->
+  <div class="recuadro">
+    <h3>Aprobación del trabajo de titulación del equipo evaluador</h3>
+    <p>Fecha: {{ recuadros.aprobacionEquipo.fechaEnvio ? recuadros.aprobacionEquipo.fechaEnvio : currentDate }}</p>
+    <input type="email" [(ngModel)]="recuadros.aprobacionEquipo.correo" placeholder="Correo del equipo evaluador" />
+    <label  for="archivo" class="custom-file-upload">
+      <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
+      Adjunta tu documento aquí
+    </label>
+    <input id="archivo" type="file" (change)="onFileSelected($event, recuadros.aprobacionEquipo)" accept="application/pdf" />
+    <button [disabled]="!esSecretario || recuadros.aprobacionEquipo.fechaEnvio"
+            (click)="sendEmail(recuadros.aprobacionEquipo)">
+      {{ recuadros.aprobacionEquipo.fechaEnvio ? 'Enviado' : 'Enviar' }}
+    </button>
+  </div>
+
+  <!-- Notificación al área de graduación -->
+  <div class="recuadro">
+    <h3>Notificación de área de graduación de aptitud para defensa del trabajo de titulación</h3>
+    <p>Fecha: {{ recuadros.areaGraduacion.fechaEnvio ? recuadros.areaGraduacion.fechaEnvio : currentDate }}</p>
+    <input type="email" [(ngModel)]="recuadros.areaGraduacion.correo" placeholder="Correo del área de graduación" />
+    <label  for="archivo" class="custom-file-upload">
+      <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
+      Adjunta tu documento aquí
+    </label>
+    <input id="archivo" type="file" (change)="onFileSelected($event, recuadros.areaGraduacion)" accept="application/pdf" />
+    <button [disabled]="!esSecretario || recuadros.areaGraduacion.fechaEnvio"
+            (click)="sendEmail(recuadros.areaGraduacion)">
+      {{ recuadros.areaGraduacion.fechaEnvio ? 'Enviado' : 'Enviar' }}
+    </button>
+  </div>
+
+  <!-- Notificación de grado señalando hora y fecha -->
+  <div class="recuadro">
+    <h3>Notificación de grado señalando hora y fecha</h3>
+    <p>Fecha: {{ fechaEnvioDirector ? fechaEnvioDirector : currentDate }}</p>
+    <p>Director: {{ directorName }}</p>
+    <input type="datetime-local" [(ngModel)]="selectedDateTime" />
+    <button [disabled]="!esSecretario || fechaEnvioDirector" (click)="sendToDirector()">
+      {{ fechaEnvioDirector ? 'Enviado' : 'Enviar' }}
+    </button>
+  </div>
+
+  <!-- Expediente de área de graduación derecho -->
+  <div class="recuadro">
+    <h3>Expediente de área de graduación derecho</h3>
+    <p>Fecha: {{ recuadros.expedienteGraduacion.fechaEnvio ? recuadros.expedienteGraduacion.fechaEnvio : currentDate }}</p>
+    <label  for="archivo" class="custom-file-upload">
+      <img src="assets/img/upload-icon.svg" alt="Upload Icon" />
+      Adjunta tu documento aquí
+    </label>
+    <input id="archivo" type="file" (change)="onFileSelected($event, recuadros.expedienteGraduacion)" accept="application/pdf" />
+    <button [disabled]="!esSecretario || recuadros.expedienteGraduacion.fechaEnvio"
+            (click)="sendEmail(recuadros.expedienteGraduacion)">
+      {{ recuadros.expedienteGraduacion.fechaEnvio ? 'Enviado' : 'Enviar' }}
+    </button>
+  </div>
+
 </div>
 <app-footer2></app-footer2>

@@ -111,6 +111,22 @@
   font-weight: bold;
 }
 
+.abs{
+  background-color: rgba(4, 65, 112, 1);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.abs:hover{
+  color: #003F72;
+  font-weight: bold;
+  background-color: white;
+}
+
 
 /* Estilo de la selección de clases */
 
@@ -147,7 +163,34 @@
   background-size: 12px;
 }
 
+.role-select select {
+  appearance: none;
+  padding: 10px;
+  border: 1px solid #1A2434;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+  max-width: 200px;
+  background-color: #fff;
+  color: #1A2434;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-image: url('/assets/img/flecha.svg');
+  background-repeat: no-repeat;
+  background-position: right 10px top 50%;
+  background-size: 12px;
+  margin-top: 10px;
+}
+
 .classes-select option {
+  padding: 10px;
+  font-size: 14px;
+  background-color: #fff;
+  color: #1A2434;
+}
+
+.role-select option {
   padding: 10px;
   font-size: 14px;
   background-color: #fff;
