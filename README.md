@@ -1,6 +1,8 @@
 # Tesisderechoutpl
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+Node version: v18.20.4
+Firebase version: 13.3.0
 
 ## Development server
 
